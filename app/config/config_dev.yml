@@ -22,6 +22,8 @@ monolog:
             type:  chromephp
             level: info
 
+nelmio_api_doc: ~
+
 assetic:
     use_controller: true
 
