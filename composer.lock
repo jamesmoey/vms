@@ -3,8 +3,75 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2f9795323e1f9b718637747b98229c3b",
+    "hash": "ca1aab4c6e9c5a3ccae7f1287adbe940",
     "packages": [
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "2.2.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2.2.1",
+                "reference": "2.2.1",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/guzzle": ">=3.3,<3.4",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "doctrine/common": "2.3.*",
+                "ext-apc": "*",
+                "ext-openssl": "*",
+                "monolog/monolog": "1.4.*",
+                "phpunit/phpunit": "3.7.*",
+                "symfony/class-loader": "2.*",
+                "symfony/yaml": "2.*"
+            },
+            "suggest": {
+                "doctrine/cache": "Adds support for caching of credentials and responses",
+                "ext-apc": "Allows service description opcode caching, request and response caching, and credentials caching",
+                "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+                "monolog/monolog": "Adds support for logging HTTP requests and responses",
+                "symfony/yaml": "Eases the ability to write manifests for creating jobs in AWS Import/Export"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Aws": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp2",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "s3",
+                "sdk"
+            ],
+            "time": "2013-03-18 23:23:45"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1",
@@ -713,6 +780,99 @@
                 "rest"
             ],
             "time": "2013-03-11 13:13:23"
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "v3.3.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.3.1",
+                "reference": "v3.3.1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "*",
+                "monolog/monolog": "1.*",
+                "phpunit/phpunit": "3.7.*",
+                "symfony/class-loader": "*",
+                "zend/zend-cache1": "1.12",
+                "zend/zend-log1": "1.12",
+                "zendframework/zend-cache": "2.0.*",
+                "zendframework/zend-log": "2.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Tests": "tests/",
+                    "Guzzle": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2013-03-10 23:05:38"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1439,6 +1599,59 @@
             "time": "2013-03-25 02:51:40"
         },
         {
+            "name": "platinumpixs/aws-symfony2-bundle",
+            "version": "dev-master",
+            "target-dir": "PlatinumPixs/Aws",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/platinumpixs/aws-symfony2-bundle.git",
+                "reference": "93c07180fa0996e7941235e332cbe845d1a25bb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/platinumpixs/aws-symfony2-bundle/zipball/93c07180fa0996e7941235e332cbe845d1a25bb3",
+                "reference": "93c07180fa0996e7941235e332cbe845d1a25bb3",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "2.*",
+                "php": ">=5.3.7",
+                "symfony/symfony": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PlatinumPixs\\Aws": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Platinum Pixs",
+                    "homepage": "http://www.platinumpixs.com"
+                }
+            ],
+            "description": "A simple Symfony 2 bundle for including the AWS SDK for PHP.",
+            "homepage": "https://github.com/platinumpixs/aws-symfony2-bundle",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "s3",
+                "sdk",
+                "symfony",
+                "symfony 2"
+            ],
+            "time": "2013-04-18 20:29:45"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -1619,16 +1832,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v4.3.0",
+            "version": "v4.3.1",
             "source": {
                 "type": "git",
-                "url": "git://github.com/swiftmailer/swiftmailer.git",
-                "reference": "v4.3.0"
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "v4.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/swiftmailer/swiftmailer/archive/v4.3.0.zip",
-                "reference": "v4.3.0",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v4.3.1",
+                "reference": "v4.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1664,7 +1877,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-01-08 15:50:34"
+            "time": "2013-04-11 10:22:09"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2136,16 +2349,16 @@
         },
         {
             "name": "behat/mink-browserkit-driver",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkBrowserKitDriver.git",
-                "reference": "v1.0.4"
+                "reference": "v1.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/v1.0.4",
-                "reference": "v1.0.4",
+                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/v1.0.5",
+                "reference": "v1.0.5",
                 "shasum": ""
             },
             "require": {
@@ -2187,25 +2400,24 @@
                 "browser",
                 "testing"
             ],
-            "time": "2013-03-08 09:50:41"
+            "time": "2013-04-13 12:17:15"
         },
         {
             "name": "behat/mink-goutte-driver",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkGoutteDriver.git",
-                "reference": "v1.0.7"
+                "reference": "v1.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/v1.0.7",
-                "reference": "v1.0.7",
+                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/v1.0.8",
+                "reference": "v1.0.8",
                 "shasum": ""
             },
             "require": {
-                "behat/mink": ">=1.4.3,<1.5",
-                "behat/mink-browserkit-driver": ">=1.0.4,<1.1",
+                "behat/mink-browserkit-driver": ">=1.0.5,<1.2.0",
                 "fabpot/goutte": ">=1.0.1,<1.1",
                 "php": ">=5.3.1"
             },
@@ -2239,7 +2451,7 @@
                 "headless",
                 "testing"
             ],
-            "time": "2013-03-08 10:02:27"
+            "time": "2013-04-13 23:30:23"
         },
         {
             "name": "behat/mink-selenium-driver",
@@ -2296,16 +2508,16 @@
         },
         {
             "name": "behat/mink-selenium2-driver",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "v1.0.5"
+                "reference": "v1.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/v1.0.5",
-                "reference": "v1.0.5",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/v1.0.6",
+                "reference": "v1.0.6",
                 "shasum": ""
             },
             "require": {
@@ -2350,20 +2562,20 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-03-08 10:09:24"
+            "time": "2013-04-13 12:56:28"
         },
         {
             "name": "behat/mink-zombie-driver",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkZombieDriver.git",
-                "reference": "v1.0.3"
+                "reference": "v1.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkZombieDriver/zipball/v1.0.3",
-                "reference": "v1.0.3",
+                "url": "https://api.github.com/repos/Behat/MinkZombieDriver/zipball/v1.0.4",
+                "reference": "v1.0.4",
                 "shasum": ""
             },
             "require": {
@@ -2408,7 +2620,7 @@
                 "testing",
                 "zombie"
             ],
-            "time": "2013-03-08 10:04:51"
+            "time": "2013-04-13 12:54:30"
         },
         {
             "name": "codeception/codeception",
@@ -2578,99 +2790,6 @@
             "time": "2013-03-08 08:00:58"
         },
         {
-            "name": "guzzle/guzzle",
-            "version": "v3.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "v3.3.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.3.1",
-                "reference": "v3.3.1",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.2",
-                "symfony/event-dispatcher": ">=2.1"
-            },
-            "replace": {
-                "guzzle/batch": "self.version",
-                "guzzle/cache": "self.version",
-                "guzzle/common": "self.version",
-                "guzzle/http": "self.version",
-                "guzzle/inflection": "self.version",
-                "guzzle/iterator": "self.version",
-                "guzzle/log": "self.version",
-                "guzzle/parser": "self.version",
-                "guzzle/plugin": "self.version",
-                "guzzle/plugin-async": "self.version",
-                "guzzle/plugin-backoff": "self.version",
-                "guzzle/plugin-cache": "self.version",
-                "guzzle/plugin-cookie": "self.version",
-                "guzzle/plugin-curlauth": "self.version",
-                "guzzle/plugin-error-response": "self.version",
-                "guzzle/plugin-history": "self.version",
-                "guzzle/plugin-log": "self.version",
-                "guzzle/plugin-md5": "self.version",
-                "guzzle/plugin-mock": "self.version",
-                "guzzle/plugin-oauth": "self.version",
-                "guzzle/service": "self.version",
-                "guzzle/stream": "self.version"
-            },
-            "require-dev": {
-                "doctrine/cache": "*",
-                "monolog/monolog": "1.*",
-                "phpunit/phpunit": "3.7.*",
-                "symfony/class-loader": "*",
-                "zend/zend-cache1": "1.12",
-                "zend/zend-log1": "1.12",
-                "zendframework/zend-cache": "2.0.*",
-                "zendframework/zend-log": "2.0.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle\\Tests": "tests/",
-                    "Guzzle": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Guzzle Community",
-                    "homepage": "https://github.com/guzzle/guzzle/contributors"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2013-03-10 23:05:38"
-        },
-        {
             "name": "instaclick/php-webdriver",
             "version": "1.0.12",
             "source": {
@@ -2731,12 +2850,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "d93388797c71ef5ab73a0905bc0736e630f66cd3"
+                "reference": "3c43cc5d07b84560f723165d3360b0827df5214d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/d93388797c71ef5ab73a0905bc0736e630f66cd3",
-                "reference": "d93388797c71ef5ab73a0905bc0736e630f66cd3",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/3c43cc5d07b84560f723165d3360b0827df5214d",
+                "reference": "3c43cc5d07b84560f723165d3360b0827df5214d",
                 "shasum": ""
             },
             "require": {
@@ -2789,7 +2908,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2013-04-10 21:50:55"
+            "time": "2013-04-17 22:29:56"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3193,6 +3312,7 @@
     "minimum-stability": "alpha",
     "stability-flags": {
         "jms/serializer-bundle": 20,
+        "platinumpixs/aws-symfony2-bundle": 20,
         "nelmio/api-doc-bundle": 20
     },
     "platform": {

@@ -13,3 +13,7 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    aws_region:        ~
+    aws_key:           ~
+    aws_secret:        ~

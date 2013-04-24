@@ -7,3 +7,7 @@
 /bin/
 /composer.phar
 /app/config/parameters.yml
+.idea/*
+/tests/acceptance/WebGuy.php
+/tests/functional/TestGuy.php
+/tests/unit/CodeGuy.php

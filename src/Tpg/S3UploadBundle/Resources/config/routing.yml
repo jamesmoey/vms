@@ -1,0 +1,5 @@
+tpg_s3upload_multipart_api:
+    type:           rest
+    name_prefix:    tpg_s3upload_api_
+    prefix:         /s3
+    resource:       Tpg\S3UploadBundle\Controller\MultipartController

@@ -66,7 +66,6 @@ swiftmailer:
 
 fos_rest:
     body_listener: true
-    param_fetcher_listener: force
     allowed_methods_listener: true
     access_denied_listener:
         json: true
@@ -79,3 +78,9 @@ fos_rest:
             - "*/*"
         fallback_format: json
         prefer_extension: true
+
+platinum_pixs_aws:
+    base:
+        region: %aws_region%
+        key: %aws_key%
+        secret: %aws_secret%

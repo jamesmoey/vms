@@ -1,0 +1,4 @@
+tpg_s3upload:
+    resource:   @TpgS3UploadBundle/Resources/config/routing.yml
+    prefix:     /api
+    type:       rest
