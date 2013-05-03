@@ -3,6 +3,11 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="tpg_s3">s3upload.tradingpursuits</parameter>
+    </parameters>
+
     <services>
         <service id="tpg_s3upload.multipart" class="Tpg\S3UploadBundle\Service\MultipartUpload">
             <argument type="service">
@@ -10,7 +15,7 @@
                     <argument type="string">s3</argument>
                 </service>
             </argument>
-            <argument>s3upload.tradingpursuits</argument>
+            <argument>%tpg_s3%</argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
     </services>

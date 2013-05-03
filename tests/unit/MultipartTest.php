@@ -45,4 +45,32 @@ class MultipartTest extends \Codeception\TestCase\Test
         $this->assertEquals($subject->getSizePerPart(), 1024*1025*11);
         $this->assertEquals($subject->getNumberOfPart(), 10000);
     }
+
+    public function testGetEmptyCompletePart() {
+        $subject = new \Tpg\S3UploadBundle\Entity\Multipart();
+        $subject->setNumberOfPart(100);
+        $this->assertEquals($subject->getCompletedPart(), array());
+        $this->assertEquals($subject->getIncompletePart(10), array(1,2,3,4,5,6,7,8,9,10));
+    }
+
+    public function testGetPartialEmptyCompletePart() {
+        $subject = new \Tpg\S3UploadBundle\Entity\Multipart();
+        $subject->setNumberOfPart(100);
+        $subject->setCompletedPart(array(1,2,3,4,5));
+        $this->assertEquals($subject->getIncompletePart(10), array(6,7,8,9,10,11,12,13,14,15));
+    }
+
+    public function testGetLastEmptyCompletePart() {
+        $subject = new \Tpg\S3UploadBundle\Entity\Multipart();
+        $subject->setNumberOfPart(10);
+        $subject->setCompletedPart(array(1,2,3,4,5,6,7,8,9));
+        $this->assertEquals($subject->getIncompletePart(10), array(10));
+    }
+
+    public function testPartDone() {
+        $subject = new \Tpg\S3UploadBundle\Entity\Multipart();
+        $subject->setNumberOfPart(10);
+        $subject->partDone(1);
+        $this->assertEquals($subject->getCompletedPart(), array(1));
+    }
 }

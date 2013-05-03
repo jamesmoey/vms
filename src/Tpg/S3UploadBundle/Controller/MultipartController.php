@@ -11,6 +11,8 @@ use JMS\Serializer\Serializer;
 use Symfony\Component\Validator\Validator;
 use Tpg\S3UploadBundle\Component\ValidationException;
 use Tpg\S3UploadBundle\Entity\Multipart;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class MultipartController extends FOSRestController {
@@ -52,6 +54,16 @@ class MultipartController extends FOSRestController {
         );
         /** @var EntityManager $em */
         $em = $this->get('doctrine.orm.default_entity_manager');
+        /** @var Multipart $existingPart */
+        $existingPart = $em->getRepository('Tpg\S3UploadBundle\Entity\Multipart')->findOneBy(array(
+            'bucket'=>$this->container->getParameter("tpg_s3"),
+            'key'=>$part->getKey()
+        ));
+        if ($existingPart == null) {
+            if ($existingPart->getStatus() == Multipart::COMPLETED) {
+
+            }
+        }
         try {
             $this->validate($part, ['precreate']);
             $model = $this->get("tpg_s3upload.multipart")->initialiseUpload($part);
@@ -97,7 +109,6 @@ class MultipartController extends FOSRestController {
      *
      * @ApiDoc(
      *  description="Return a collection of S3 Multipart Upload",
-     *  output="Tpg\S3UploadBundle\Entity\Multipart",
      *  statusCodes={
      *      200="List Successfully",
      *  }
@@ -110,5 +121,46 @@ class MultipartController extends FOSRestController {
         $repo = $em->getRepository('Tpg\S3UploadBundle\Entity\Multipart');
         $view = View::create($repo->findAll(), 200);
         return $this->handleView($view);
+    }
+
+    /**
+     * Generate the signature of the incomplete part of S3 Multipart Upload.
+     *
+     * @ApiDoc(
+     *  description="Progress to the next part of S3 Multipart Upload",
+     *  statusCodes={
+     *      200="Successfully",
+     *  }
+     * )
+     */
+    public function putMultipartNextAction($id, $count = 1) {
+        /** @var EntityManager $em */
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $part = $em->find('Tpg\S3UploadBundle\Entity\Multipart', $id);
+        if ($part === null) {
+            $view = View::create(['errors'=>'Entity not found'], 404);
+        } else {
+            $signature = $this->get("tpg_s3upload.multipart")->getUploadSignature(
+                $part,
+                $part->getIncompletePart($count),
+                new \DateTime("+1 hour", new \DateTimeZone('GMT'))
+            );
+            $view = View::create($signature, 200);
+        }
+        return $this->handleView($view);
+    }
+
+    /**
+     * Finish part of S3 Multipart upload.
+     *
+     * @ApiDoc(
+     *  description="Finish part of S3 Multipart upload",
+     *  statusCodes={
+     *      200="Saved Successfully",
+     *  }
+     * )
+     */
+    public function putMultipartCompleteAction($id, $part, $etag) {
+
     }
 }

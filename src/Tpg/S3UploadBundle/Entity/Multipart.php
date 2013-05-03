@@ -452,6 +452,14 @@ class Multipart {
     }
 
     /**
+     * @ORM/PrePersist
+     */
+    public function doCompletedPartOrdering() {
+        array_unique($this->completedPart);
+        $this->completedPart = array_values($this->completedPart);
+    }
+
+    /**
      * Set sizePerPart
      *
      * @param integer $sizePerPart
@@ -475,6 +483,14 @@ class Multipart {
     }
 
     /**
+     * Mark a part is done.
+     * @param integer $part
+     */
+    public function partDone($part) {
+        $this->completedPart[] = $part;
+    }
+
+    /**
      * Calculate number of part and size of each part
      */
     public function calculatePart() {
@@ -485,5 +501,22 @@ class Multipart {
             $this->setSizePerPart(self::$SIZE_PER_PART);
             $this->setNumberOfPart(ceil($this->getSize() / self::$SIZE_PER_PART));
         }
+    }
+
+    /**
+     * Get array of incomplete part.
+     *
+     * @param int $length
+     * @return int[] List of incomplete part.
+     */
+    public function getIncompletePart($length) {
+        $incompleteParts = [];
+        for ($i = 1, $numberOfPart = $this->getNumberOfPart(); $i <= $numberOfPart; $i++) {
+            if (!in_array($i, $this->getCompletedPart())) {
+                $incompleteParts[] = $i;
+            }
+            if (count($incompleteParts) == $length) break;
+        }
+        return $incompleteParts;
     }
 }

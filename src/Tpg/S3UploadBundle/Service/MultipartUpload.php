@@ -1,9 +1,12 @@
 <?php
 namespace Tpg\S3UploadBundle\Service;
 
+use Aws\Common\Enum\DateFormat;
 use Aws\S3\S3Client;
+use Aws\S3\S3SignatureInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityRepository;
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Resource\Model;
 use Tpg\S3UploadBundle\Entity\Multipart;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -45,8 +48,84 @@ class MultipartUpload implements EventSubscriber {
         return $model;
     }
 
-    public function find($bucket, $key) {
+    /**
+     * Get Signature from S3
+     *
+     * @param Multipart $part
+     * @param int[]|int $partsNumbers
+     * @param \DateTime $expire
+     *
+     * @return
+     */
+    public function getUploadSignature(Multipart $part, $partsNumbers, \DateTime $expire) {
+        if (!is_array($partsNumbers)) {
+            $partsNumbers = [$partsNumbers];
+        }
+        $authorizations = [];
+        $expire->setTimezone(new \DateTimeZone('GMT'));
+        $now = new \DateTime('now', new \DateTimeZone('GMT'));
+        foreach ($partsNumbers as $partId) {
+            $request = $this->s3->createRequest(
+                RequestInterface::POST,
+                '/'.$part->getBucket().$part->getKey().'?partNumber='.$partId.'&uploadId='.$part->getUploadId(),
+                [
+                    'Content-Type' => $part->getMimeType(),
+                    'x-amz-date' => $now->format(DateFormat::RFC2822)
+                ]
+            );
+            /** @var S3SignatureInterface $signature */
+            $signature = $this->s3->getSignature();
+            $authorizations[$partId] = 'AWS ' .
+                $this->s3->getCredentials()->getAccessKeyId() . ':' .
+                $signature->signString(
+                    $signature->createCanonicalizedString($request, $expire->getTimestamp()),
+                    $this->s3->getCredentials()
+                );
+        }
+        return [
+            'authorisations' => $authorizations,
+            'x-amz-date' => $now->format(DateFormat::RFC2822)
+        ];
+    }
 
+    /**
+     * Complete a partial upload.
+     *
+     * @param Multipart $part
+     * @param int       $partNumber
+     * @param string    $etag
+     */
+    public function completePartial(Multipart $part, $partNumber, $etag) {
+        $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
+        $completedPart = $part->getCompletedPart();
+        $completedPart[$partNumber] = $etag;
+        $part->setCompletedPart($completedPart);
+        $part->setStatus(Multipart::IN_PROGRESS);
+    }
+
+    /**
+     * Complete a
+     * @param Multipart $part
+     *
+     * @return Model
+     */
+    public function completeUpload(Multipart $part) {
+        $parts = [];
+        foreach ($part->getCompletedPart() as $key => $etag) {
+            $parts[] = [
+                "PartNumber"    => $key,
+                "ETag"          => $etag
+            ];
+        }
+        $model = $this->s3->completeMultipartUpload([
+            'Key'       => $part->getKey(),
+            'Bucket'    => $this->bucket,
+            'UploadId'  => $part->getUploadId(),
+            'Parts'     => $parts
+        ]);
+        $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
+        $part->setStatus(Multipart::COMPLETED);
+        return $model;
     }
 
     /**
