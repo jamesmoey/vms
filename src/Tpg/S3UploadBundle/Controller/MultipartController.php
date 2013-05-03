@@ -161,6 +161,17 @@ class MultipartController extends FOSRestController {
      * )
      */
     public function putMultipartCompleteAction($id, $part, $etag) {
-
+        /** @var EntityManager $em */
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        /** @var Multipart $multipart */
+        $multipart = $em->find('Tpg\S3UploadBundle\Entity\Multipart', $id);
+        if ($multipart === null) {
+            $view = View::create(['errors'=>'Entity not found'], 404);
+        } else {
+            $multipart->partDone($part, $etag);
+            $em->flush();
+            $view = View::create($multipart, 200);
+        }
+        return $this->handleView($view);
     }
 }
