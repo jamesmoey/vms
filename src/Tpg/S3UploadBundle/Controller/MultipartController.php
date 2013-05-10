@@ -94,7 +94,8 @@ class MultipartController extends FOSRestController {
      *  }
      * )
      *
-     * @param integer $id
+     * @param integer $id Multipart Upload ID
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteMultipartAction($id) {
         /** @var EntityManager $em */
@@ -119,6 +120,7 @@ class MultipartController extends FOSRestController {
      *      200="List Successfully",
      *  }
      * )
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getMultipartsAction() {
         /** @var EntityManager $em */
@@ -132,14 +134,19 @@ class MultipartController extends FOSRestController {
     /**
      * Generate the signature of the incomplete part of S3 Multipart Upload.
      *
+     * @RequestParam(name="md5", strict=false, description="MD5 hash of the part upload")
+     *
      * @ApiDoc(
      *  description="Progress to the next part of S3 Multipart Upload",
      *  statusCodes={
      *      200="Successfully",
      *  }
      * )
+     *
+     * @param integer $id Multipart Upload ID
+     * @param integer $count x number of next part to get
      */
-    public function putMultipartNextAction($id, $count = 1) {
+    public function putMultipartNextAction($id, $count) {
         /** @var EntityManager $em */
         $em = $this->get('doctrine.orm.default_entity_manager');
         $part = $em->find('Tpg\S3UploadBundle\Entity\Multipart', $id);
@@ -161,6 +168,8 @@ class MultipartController extends FOSRestController {
     /**
      * Finish part of S3 Multipart upload.
      *
+     * @RequestParam(name="etag", description="Etag of the part upload")
+     *
      * @ApiDoc(
      *  description="Finish part of S3 Multipart upload",
      *  output="Tpg\S3UploadBundle\Entity\Multipart",
@@ -170,6 +179,11 @@ class MultipartController extends FOSRestController {
      *      404="Upload entity is not found"
      *  }
      * )
+     *
+     * @param integer $id Multipart Upload ID
+     * @param integer $part Part number of the complete multipart upload part
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function putMultipartCompleteAction($id, $part) {
         $etag = $this->getRequest()->request->get("etag");
