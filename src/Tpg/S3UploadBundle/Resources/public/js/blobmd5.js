@@ -26,7 +26,6 @@
         var deferred = Q.defer();
         var fileReader = new FileReader();
         fileReader.onload = function (e) {
-            console.log(e);
             deferred.resolve(md5.base64(e.target.result, {"b64pad": "="}));
         };
         fileReader.onerror = function(e) {

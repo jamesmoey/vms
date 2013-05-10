@@ -53,19 +53,16 @@
                 .then(function(response) {
                     return me.upload(JSON.parse(response.responseText));
                 }, function(error) {
-                    console.log(error);
                     deferred.reject(error);
                 })
                 .then(function(response) {
                     deferred.resolve(JSON.parse(response.responseText));
                 })
                 .done(null, function(error) {
-                    console.log(error);
                     me.abort();
                     deferred.reject(error);
                 }, function(progress) {
                     if (progress >= 1 && progress <= 100) {
-                        console.log(progress);
                         deferred.notify(progress);
                     }
                 });

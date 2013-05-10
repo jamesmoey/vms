@@ -8,25 +8,31 @@
             var fileInput = document.getElementById("file");
             var uploadBtn = document.getElementById("upload");
             uploadBtn.addEventListener("click", function(event) {
+                document.getElementById("progressBox").innerHTML = "";
                 for(var i = 0; i < fileInput.files.length; i++) {
                     var file = fileInput.files.item(i);
+                    document.getElementById("progressBox").innerHTML += file.name+'<progress id="progress'+i+'" value="0" max="100"></progress><br/>';
                     console.log(file);
                     upload(file).then(function(multipart) {
                         console.log(multipart);
                         alert("Done");
                     }, function(error) {
                         console.log(error);
-                    }, function(progress) {
-                        document.getElementById("progress").value = progress;
-                    });
+                    }, (function (count) {
+                        return function(progress) {
+                            document.getElementById("progress"+count).value = progress;
+                        };
+                    })(i));
                 }
             });
         });
     </script>
 </head>
 <body>
-<input type="file" id="file">
+<input type="file" id="file" multiple="multiple">
 <input type="submit" id="upload" value="Upload"><br/>
-<progress id="progress" value="0" max="100"></progress>
+<div id="progressBox">
+
+</div>
 </body>
 </html>
