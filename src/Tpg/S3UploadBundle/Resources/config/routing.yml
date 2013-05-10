@@ -3,3 +3,8 @@ tpg_s3upload_multipart_api:
     name_prefix:    tpg_s3upload_api_
     prefix:         /s3
     resource:       Tpg\S3UploadBundle\Controller\MultipartController
+
+tpg_s3upload_upload_api:
+    type:           annotation
+    prefix:         /s3
+    resource:       Tpg\S3UploadBundle\Controller\UploadController

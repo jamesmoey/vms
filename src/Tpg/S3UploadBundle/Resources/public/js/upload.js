@@ -24,6 +24,7 @@
      * @constructor
      */
     function S3Upload(file) {
+        var fileMd5 = false;
         _.extend(this, S3UploadBase);
         if (file.size > 1024*1024*15) {
             _.extend(this, S3UploadMulti);
@@ -37,6 +38,13 @@
          */
         this.getFile = function() {
             return file;
+        };
+        this.getFileMD5 = function() {
+            return fileMd5;
+        };
+        this.setFileMd5 = function(md5) {
+            fileMd5 = md5;
+            return this;
         };
     }
 
@@ -171,10 +179,34 @@
 
     var S3UploadSingle = {
         startRequest: function() {
-
+            var me = this;
+            return blobMD5(this.getFile()).then(function(hash) {
+                me.setFileMd5(hash);
+                return request(
+                    '/api/s3/signature',
+                    'POST',
+                    JSON.stringify({
+                        md5: hash,
+                        mime_type: me.getFile().type,
+                        key: me.getFile().name
+                    }),
+                    { "Content-Type": "application/json" }
+                );
+            });
         },
-        upload: function() {
-
+        upload: function(result) {
+            return request(
+                '//'+result.bucket+".s3.amazonaws.com"+'/'+result.key,
+                'PUT',
+                this.getFile(),
+                {
+                    "Content-Type": this.getFile().type,
+                    "x-amz-date": result['x-amz-date'],
+                    "Authorization": result.authorisation,
+                    "Content-MD5": this.getFileMD5()
+                },
+                true
+            );
         },
         abort: function() {
 

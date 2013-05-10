@@ -19,5 +19,15 @@
             <argument type="service" id="logger" />
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
+
+        <service id="tpg_s3upload.upload" class="Tpg\S3UploadBundle\Service\Upload">
+            <argument type="service">
+                <service class="AmazonS3" factory-service="platinum_pixs_aws.base" factory-method="get">
+                    <argument type="string">s3</argument>
+                </service>
+            </argument>
+            <argument>%tpg_s3%</argument>
+            <argument type="service" id="logger" />
+        </service>
     </services>
 </container>
