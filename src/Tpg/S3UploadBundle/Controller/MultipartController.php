@@ -33,10 +33,14 @@ class MultipartController extends FOSRestController {
      *  description="Create new S3 Multipart Upload",
      *  input="Tpg\S3UploadBundle\Entity\Multipart",
      *  output="Tpg\S3UploadBundle\Entity\Multipart",
+     *  resource=true,
      *  statusCodes={
      *      200="Created Successfully",
      *      400={
-     *          "Returned when pre-create validation failed, for detail check the errors json parameter in body",
+     *          "Returned when pre-create validation failed, for detail check the errors json parameter in body"
+     *      },
+     *      409={
+     *          "Returned when resource already exist"
      *      }
      *  }
      * )
@@ -59,9 +63,11 @@ class MultipartController extends FOSRestController {
             'bucket'=>$this->container->getParameter("tpg_s3"),
             'key'=>$part->getKey()
         ));
-        if ($existingPart == null) {
-            if ($existingPart->getStatus() == Multipart::COMPLETED) {
-
+        if ($existingPart !== null) {
+            if ($existingPart->getStatus() == Multipart::STARTED || $existingPart->getStatus() == Multipart::IN_PROGRESS) {
+                return $this->handleView(View::create($existingPart, 200));
+            } else {
+                return $this->handleView(View::create(['errors'=>$part->getKey().' already exist', 'part'=>$existingPart], 409));
             }
         }
         try {
@@ -140,10 +146,12 @@ class MultipartController extends FOSRestController {
         if ($part === null) {
             $view = View::create(['errors'=>'Entity not found'], 404);
         } else {
+            $md5 = $this->getRequest()->request->has("md5")?$this->getRequest()->request->get("md5"):null;
             $signature = $this->get("tpg_s3upload.multipart")->getUploadSignature(
                 $part,
                 $part->getIncompletePart($count),
-                new \DateTime("+1 hour", new \DateTimeZone('GMT'))
+                new \DateTime("+1 hour", new \DateTimeZone('GMT')),
+                $md5
             );
             $view = View::create($signature, 200);
         }
@@ -155,22 +163,30 @@ class MultipartController extends FOSRestController {
      *
      * @ApiDoc(
      *  description="Finish part of S3 Multipart upload",
+     *  output="Tpg\S3UploadBundle\Entity\Multipart",
      *  statusCodes={
      *      200="Saved Successfully",
+     *      400="General client input error",
+     *      404="Upload entity is not found"
      *  }
      * )
      */
-    public function putMultipartCompleteAction($id, $part, $etag) {
-        /** @var EntityManager $em */
-        $em = $this->get('doctrine.orm.default_entity_manager');
-        /** @var Multipart $multipart */
-        $multipart = $em->find('Tpg\S3UploadBundle\Entity\Multipart', $id);
-        if ($multipart === null) {
-            $view = View::create(['errors'=>'Entity not found'], 404);
+    public function putMultipartCompleteAction($id, $part) {
+        $etag = $this->getRequest()->request->get("etag");
+        if (!$etag) {
+            $view = View::create(['errors'=>'Missing etag in the request body'], 400);
         } else {
-            $multipart->partDone($part, $etag);
-            $em->flush();
-            $view = View::create($multipart, 200);
+            /** @var EntityManager $em */
+            $em = $this->get('doctrine.orm.default_entity_manager');
+            /** @var Multipart $multipart */
+            $multipart = $em->find('Tpg\S3UploadBundle\Entity\Multipart', $id);
+            if ($multipart === null) {
+                $view = View::create(['errors'=>'Entity not found'], 404);
+            } else {
+                $this->get("tpg_s3upload.multipart")->completePartial($multipart, $part, $etag);
+                $em->flush();
+                $view = View::create($multipart, 200);
+            }
         }
         return $this->handleView($view);
     }

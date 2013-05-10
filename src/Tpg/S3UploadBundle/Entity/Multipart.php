@@ -159,7 +159,7 @@ class Multipart {
     /**
      * File mime type.
      *
-     * @ORM\Column(name="mime_type", nullable=true)
+     * @ORM\Column(name="mime_type")
      * @Assert\NotBlank
      *
      * @var string
@@ -181,6 +181,42 @@ class Multipart {
      * @var string
      */
     protected $acl = "private";
+
+    /**
+     * URI of the completed upload
+     *
+     * @ORM\Column(name="uri", nullable=true)
+     * @JMS\ReadOnly
+     * @var string
+     */
+    protected $uri;
+
+    /**
+     * Version Id of the completed upload object
+     *
+     * @ORM\Column(name="version_id", nullable=true)
+     * @JMS\ReadOnly
+     * @var string
+     */
+    protected $versionId;
+
+    /**
+     * Expiration of the completed upload object
+     *
+     * @ORM\Column(name="expiration", nullable=true)
+     * @JMS\ReadOnly
+     * @var string
+     */
+    protected $expiration;
+
+    /**
+     * ETag of the completed upload resource
+     *
+     * @ORM\Column(name="etag", nullable=true)
+     * @JMS\ReadOnly
+     * @var string
+     */
+    protected $etag;
 
     /**
      * Get id
@@ -465,7 +501,7 @@ class Multipart {
     }
 
     /**
-     * Get sizePerPart
+      Get sizePerPart
      *
      * @return integer
      */
@@ -511,5 +547,97 @@ class Multipart {
             if (count($incompleteParts) == $length) break;
         }
         return $incompleteParts;
+    }
+
+    /**
+     * Set uri
+     *
+     * @param string $uri
+     * @return Multipart
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+    
+        return $this;
+    }
+
+    /**
+     * Get uri
+     *
+     * @return string 
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * Set versionId
+     *
+     * @param string $versionId
+     * @return Multipart
+     */
+    public function setVersionId($versionId)
+    {
+        $this->versionId = $versionId;
+    
+        return $this;
+    }
+
+    /**
+     * Get versionId
+     *
+     * @return string 
+     */
+    public function getVersionId()
+    {
+        return $this->versionId;
+    }
+
+    /**
+     * Set expiration
+     *
+     * @param string $expiration
+     * @return Multipart
+     */
+    public function setExpiration($expiration)
+    {
+        $this->expiration = $expiration;
+    
+        return $this;
+    }
+
+    /**
+     * Get expiration
+     *
+     * @return string 
+     */
+    public function getExpiration()
+    {
+        return $this->expiration;
+    }
+
+    /**
+     * Set etag
+     *
+     * @param string $etag
+     * @return Multipart
+     */
+    public function setEtag($etag)
+    {
+        $this->etag = $etag;
+    
+        return $this;
+    }
+
+    /**
+     * Get etag
+     *
+     * @return string 
+     */
+    public function getEtag()
+    {
+        return $this->etag;
     }
 }

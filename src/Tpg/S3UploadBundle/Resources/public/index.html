@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Testing</title>
+    <script src="vendor/require.js"></script>
+    <script type="text/javascript">
+        require(['js/upload'], function(upload) {
+            var fileInput = document.getElementById("file");
+            var uploadBtn = document.getElementById("upload");
+            uploadBtn.addEventListener("click", function(event) {
+                for(var i = 0; i < fileInput.files.length; i++) {
+                    var file = fileInput.files.item(i);
+                    console.log(file);
+                    upload(file).then(function(multipart) {
+                        console.log(multipart);
+                        alert("Done");
+                    }, function(error) {
+                        console.log(error);
+                    }, function(progress) {
+                        document.getElementById("progress").value = progress;
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<input type="file" id="file">
+<input type="submit" id="upload" value="Upload"><br/>
+<progress id="progress" value="0" max="100"></progress>
+</body>
+</html>

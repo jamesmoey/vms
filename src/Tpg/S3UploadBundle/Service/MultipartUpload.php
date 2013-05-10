@@ -7,7 +7,9 @@ use Aws\S3\S3SignatureInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityRepository;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Service\Exception\CommandException;
 use Guzzle\Service\Resource\Model;
+use Monolog\Logger;
 use Tpg\S3UploadBundle\Entity\Multipart;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
@@ -20,16 +22,20 @@ class MultipartUpload implements EventSubscriber {
 
     protected $bucket;
 
-    public function __construct($s3, $bucket) {
+    /** @var  Logger $logger */
+    protected $logger;
+
+    public function __construct($s3, $bucket, $logger) {
         $this->s3 = $s3;
         $this->bucket = $bucket;
+        $this->logger = $logger;
     }
 
     /**
      * Initialise S3 Multipart Upload
      *
      * @param Multipart $part
-     *
+     * @throws CommandException
      * @return Model
      */
     public function initialiseUpload(Multipart $part) {
@@ -54,10 +60,11 @@ class MultipartUpload implements EventSubscriber {
      * @param Multipart $part
      * @param int[]|int $partsNumbers
      * @param \DateTime $expire
+     * @param string $md5 Optional
      *
-     * @return
+     * @return array with array of authorisations and x-amz-date
      */
-    public function getUploadSignature(Multipart $part, $partsNumbers, \DateTime $expire) {
+    public function getUploadSignature(Multipart $part, $partsNumbers, \DateTime $expire, $md5 = null) {
         if (!is_array($partsNumbers)) {
             $partsNumbers = [$partsNumbers];
         }
@@ -65,20 +72,24 @@ class MultipartUpload implements EventSubscriber {
         $expire->setTimezone(new \DateTimeZone('GMT'));
         $now = new \DateTime('now', new \DateTimeZone('GMT'));
         foreach ($partsNumbers as $partId) {
+            $headers = [
+                'Content-Type' => $part->getMimeType(),
+                'x-amz-date' => $now->format(DateFormat::RFC2822)
+            ];
+            if ($md5 !== null) {
+                $headers['Content-MD5'] = $md5;
+            }
             $request = $this->s3->createRequest(
-                RequestInterface::POST,
-                '/'.$part->getBucket().$part->getKey().'?partNumber='.$partId.'&uploadId='.$part->getUploadId(),
-                [
-                    'Content-Type' => $part->getMimeType(),
-                    'x-amz-date' => $now->format(DateFormat::RFC2822)
-                ]
+                RequestInterface::PUT,
+                '/'.$part->getBucket().'/'.$part->getKey().'?partNumber='.$partId.'&uploadId='.$part->getUploadId(),
+                $headers
             );
             /** @var S3SignatureInterface $signature */
             $signature = $this->s3->getSignature();
             $authorizations[$partId] = 'AWS ' .
                 $this->s3->getCredentials()->getAccessKeyId() . ':' .
                 $signature->signString(
-                    $signature->createCanonicalizedString($request, $expire->getTimestamp()),
+                    $signature->createCanonicalizedString($request),
                     $this->s3->getCredentials()
                 );
         }
@@ -97,15 +108,15 @@ class MultipartUpload implements EventSubscriber {
      */
     public function completePartial(Multipart $part, $partNumber, $etag) {
         $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
-        $completedPart = $part->getCompletedPart();
-        $completedPart[$partNumber] = $etag;
-        $part->setCompletedPart($completedPart);
+        $part->partDone($partNumber, $etag);
         $part->setStatus(Multipart::IN_PROGRESS);
     }
 
     /**
      * Complete a
      * @param Multipart $part
+     *
+     * @throws CommandException
      *
      * @return Model
      */
@@ -117,12 +128,17 @@ class MultipartUpload implements EventSubscriber {
                 "ETag"          => $etag
             ];
         }
+        /** @var Model $model */
         $model = $this->s3->completeMultipartUpload([
             'Key'       => $part->getKey(),
             'Bucket'    => $this->bucket,
             'UploadId'  => $part->getUploadId(),
             'Parts'     => $parts
         ]);
+        $part->setUri($model->get("Location"));
+        $part->setVersionId($model->get("VersionId"));
+        $part->setExpiration($model->get("Expiration"));
+        $part->setEtag(trim($model->get("ETag"), '"'));
         $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
         $part->setStatus(Multipart::COMPLETED);
         return $model;
@@ -131,7 +147,9 @@ class MultipartUpload implements EventSubscriber {
     /**
      * Abort S3 Multipart Upload
      *
+     * @throws CommandException
      * @param Multipart $part
+     * @return Model
      */
     public function abortUpload(Multipart $part) {
         $model = $this->s3->abortMultipartUpload(array(
@@ -153,6 +171,7 @@ class MultipartUpload implements EventSubscriber {
     {
         return array(
             'postRemove',
+            'preUpdate',
         );
     }
 
@@ -162,6 +181,27 @@ class MultipartUpload implements EventSubscriber {
             $part = $arg->getEntity();
             if ($part->getStatus() == Multipart::STARTED || $part->getStatus() == Multipart::IN_PROGRESS) {
                 $this->abortUpload($part);
+            }
+        }
+    }
+
+    public function preUpdate(LifecycleEventArgs $arg) {
+        if ($arg->getEntity() instanceof Multipart) {
+            /** @var Multipart $part */
+            $part = $arg->getEntity();
+            if (
+                $part->getStatus() == Multipart::IN_PROGRESS &&
+                count($part->getCompletedPart()) == $part->getNumberOfPart()
+            ) {
+                try {
+                    $this->completeUpload($part);
+                    $em = $arg->getEntityManager();
+                    $uow = $em->getUnitOfWork();
+                    $meta = $em->getClassMetadata(get_class($part));
+                    $uow->recomputeSingleEntityChangeSet($meta, $part);
+                } catch(CommandException $e) {
+                    $this->logger->error("Error calling complete upload to AWS S3", ['exception'=>$e]);
+                }
             }
         }
     }

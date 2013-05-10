@@ -66,6 +66,7 @@ swiftmailer:
 
 fos_rest:
     body_listener: true
+    param_fetcher_listener: true
     allowed_methods_listener: true
     access_denied_listener:
         json: true
