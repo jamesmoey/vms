@@ -3,6 +3,7 @@
 namespace Tpg\S3UploadBundle\Command;
 
 use Aws\S3\S3Client;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -60,9 +61,11 @@ class MultipartUploadCommand extends ContainerAwareCommand {
         $list = $this->s3->listMultipartUploads([
             'Bucket' => $this->bucket
         ]);
+        /** @var EntityRepository $repository */
+        $repository = $this->getContainer()->get("doctrine.orm.entity_manager")->getRepository("TpgS3UploadBundle:Multipart");
         foreach($list->get("Uploads") as $upload) {
             $date = new \DateTime($upload['Initiated']);
-            if ($date < $older) {
+            if ($date < $older && $repository->findOneBy(['uploadId'=>$upload['UploadId']]) === null) {
                 $this->s3->abortMultipartUpload([
                     'Bucket' => $this->bucket,
                     'Key' => $upload['Key'],

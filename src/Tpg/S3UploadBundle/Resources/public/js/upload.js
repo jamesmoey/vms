@@ -79,8 +79,6 @@
          * @returns {Q.promise}
          */
         startRequest: function() {
-            var me = this;
-            return blobMD5(this.getFile()).then(function(hash) {
             return request(
                 '/api/s3/multiparts.json',
                 'POST',
@@ -91,7 +89,6 @@
                 }),
                 { "Content-Type": "application/json" }
             );
-            });
         },
         /**
          * Upload the resource.
