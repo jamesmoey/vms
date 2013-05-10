@@ -201,7 +201,7 @@
                 this.getFile(),
                 {
                     "Content-Type": this.getFile().type,
-                    "x-amz-date": result['x-amz-date'],
+                    "x-amz-date": result.date,
                     "Authorization": result.authorisation,
                     "Content-MD5": this.getFileMD5()
                 },

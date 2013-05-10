@@ -3,6 +3,7 @@ namespace Tpg\S3UploadBundle\Controller;
 
 use Aws\Common\Enum\DateFormat;
 use Aws\S3\S3Client;
+use FOS\RestBundle\View\View;
 use Guzzle\Http\Message\RequestInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -15,10 +16,11 @@ use Tpg\S3UploadBundle\Service\Upload;
 class UploadController extends Controller {
 
     /**
-     * Generate a signature for this upload. Return with bucket, key, authorisation and x-amz-date
+     * Generate a signature for this upload.
      *
      * @ApiDoc(
      *  description="Get the authorisation signature for S3 Single Upload",
+     *  output="Tpg\S3UploadBundle\Model\UploadAuthorizeSignature",
      *  statusCodes={
      *      200="Created Successfully",
      *  }
@@ -33,10 +35,11 @@ class UploadController extends Controller {
     public function signatureAction() {
         /** @var Upload $service */
         $service = $this->get('tpg_s3upload.upload');
-        return new JsonResponse($service->generateSignature(
+        $view = View::create($service->generateSignature(
             $this->getRequest()->request->get("mime_type"),
             $this->getRequest()->request->get("key"),
             $this->getRequest()->request->get("md5")
         ));
+        return $this->get('fos_rest.view_handler')->handle($view);
     }
 }

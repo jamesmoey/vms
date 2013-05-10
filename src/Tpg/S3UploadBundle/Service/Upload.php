@@ -6,6 +6,7 @@ use Aws\S3\S3Client;
 use Aws\S3\S3SignatureInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Monolog\Logger;
+use Tpg\S3UploadBundle\Model\UploadAuthorizeSignature;
 
 class Upload {
     /**
@@ -31,7 +32,7 @@ class Upload {
      * @param string $key
      * @param string $md5
      *
-     * @return array
+     * @return UploadAuthorizeSignature
      */
     public function generateSignature($mimeType, $key, $md5) {
         $now = new \DateTime('now', new \DateTimeZone('GMT'));
@@ -53,11 +54,11 @@ class Upload {
                 $signature->createCanonicalizedString($request),
                 $this->s3->getCredentials()
             );
-        return [
-            'key' => $key,
-            'bucket' => $this->bucket,
-            'authorisation' => $authorization,
-            'x-amz-date' => $now->format(DateFormat::RFC2822)
-        ];
+        $output = new UploadAuthorizeSignature();
+        $output->setAuthorisation($authorization)
+            ->setKey($key)
+            ->setBucket($this->bucket)
+            ->setDate($now);
+        return $output;
     }
 }
