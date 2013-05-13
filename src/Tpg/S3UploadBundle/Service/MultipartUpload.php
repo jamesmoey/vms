@@ -10,8 +10,11 @@ use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Exception\CommandException;
 use Guzzle\Service\Resource\Model;
 use Monolog\Logger;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Tpg\S3UploadBundle\Entity\Multipart;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Tpg\S3UploadBundle\Event\UploadCompleteEvent;
+use Tpg\S3UploadBundle\UploadEvents;
 
 class MultipartUpload implements EventSubscriber {
 
@@ -25,10 +28,17 @@ class MultipartUpload implements EventSubscriber {
     /** @var  Logger $logger */
     protected $logger;
 
-    public function __construct($s3, $bucket, $logger) {
+    /** @var Multipart[] $completedUpload */
+    protected $completedUpload = [];
+
+    /** @var  ContainerAwareEventDispatcher $eventDispatcher*/
+    protected $eventDispatcher;
+
+    public function __construct($s3, $bucket, $logger, $ed) {
         $this->s3 = $s3;
         $this->bucket = $bucket;
         $this->logger = $logger;
+        $this->eventDispatcher = $ed;
     }
 
     /**
@@ -81,7 +91,7 @@ class MultipartUpload implements EventSubscriber {
             }
             $request = $this->s3->createRequest(
                 RequestInterface::PUT,
-                '/'.$part->getBucket().'/'.$part->getKey().'?partNumber='.$partId.'&uploadId='.$part->getUploadId(),
+                '/'.$part->getBucket().'/'.urlencode($part->getKey()).'?partNumber='.$partId.'&uploadId='.$part->getUploadId(),
                 $headers
             );
             /** @var S3SignatureInterface $signature */
@@ -141,6 +151,7 @@ class MultipartUpload implements EventSubscriber {
         $part->setEtag(trim($model->get("ETag"), '"'));
         $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
         $part->setStatus(Multipart::COMPLETED);
+        $this->completedUpload[] = $part;
         return $model;
     }
 
@@ -202,6 +213,18 @@ class MultipartUpload implements EventSubscriber {
                 } catch(CommandException $e) {
                     $this->logger->error("Error calling complete upload to AWS S3", ['exception'=>$e]);
                 }
+            }
+        }
+    }
+
+    public function postUpdate(LifecycleEventArgs $arg) {
+        $entity = $arg->getEntity();
+        if ($entity instanceof Multipart) {
+            if (in_array($entity, $this->completedUpload)) {
+                $event = new UploadCompleteEvent();
+                $event->setBucket($entity->getBucket())
+                    ->setKey($entity->getKey());
+                $this->eventDispatcher->dispatch(UploadEvents::COMPLETE, $event);
             }
         }
     }

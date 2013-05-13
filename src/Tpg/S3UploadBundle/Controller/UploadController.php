@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Tpg\S3UploadBundle\Service\Upload;
 
 class UploadController extends Controller {
@@ -41,5 +42,24 @@ class UploadController extends Controller {
             $this->getRequest()->request->get("md5")
         ));
         return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    /**
+     * Notification of an upload completion
+     *
+     * @ApiDoc(
+     *  description="Notification of an upload completion",
+     *  statusCodes={
+     *      200="Accepted Successfully",
+     *  }
+     * )
+     *
+     * @Route(path="/complete/{key}", methods="POST")
+     */
+    public function completeAction($key) {
+        /** @var Upload $service */
+        $service = $this->get('tpg_s3upload.upload');
+        $service->completion($key);
+        return new Response('', 200);
     }
 }

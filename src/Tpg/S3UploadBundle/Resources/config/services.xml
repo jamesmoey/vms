@@ -17,6 +17,7 @@
             </argument>
             <argument>%tpg_s3%</argument>
             <argument type="service" id="logger" />
+            <argument type="service" id="event_dispatcher" />
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
 
@@ -28,6 +29,7 @@
             </argument>
             <argument>%tpg_s3%</argument>
             <argument type="service" id="logger" />
+            <argument type="service" id="event_dispatcher" />
         </service>
     </services>
 </container>

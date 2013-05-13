@@ -6,7 +6,10 @@ use Aws\S3\S3Client;
 use Aws\S3\S3SignatureInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Monolog\Logger;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Tpg\S3UploadBundle\Event\UploadCompleteEvent;
 use Tpg\S3UploadBundle\Model\UploadAuthorizeSignature;
+use Tpg\S3UploadBundle\UploadEvents;
 
 class Upload {
     /**
@@ -19,10 +22,14 @@ class Upload {
     /** @var  Logger $logger */
     protected $logger;
 
-    public function __construct($s3, $bucket, $logger) {
+    /** @var  ContainerAwareEventDispatcher $eventDispatcher*/
+    protected $eventDispatcher;
+
+    public function __construct($s3, $bucket, $logger, $ed) {
         $this->s3 = $s3;
         $this->bucket = $bucket;
         $this->logger = $logger;
+        $this->eventDispatcher = $ed;
     }
 
     /**
@@ -60,5 +67,12 @@ class Upload {
             ->setBucket($this->bucket)
             ->setDate($now);
         return $output;
+    }
+
+    public function completion($key) {
+        $event = new UploadCompleteEvent();
+        $event->setBucket($this->bucket)
+            ->setKey($key);
+        $this->eventDispatcher->dispatch(UploadEvents::COMPLETE, $event);
     }
 }

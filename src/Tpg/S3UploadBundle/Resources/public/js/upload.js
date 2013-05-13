@@ -195,6 +195,7 @@
             });
         },
         upload: function(result) {
+            var me = this;
             return request(
                 '//'+result.bucket+".s3.amazonaws.com"+'/'+result.key,
                 'PUT',
@@ -206,7 +207,13 @@
                     "Content-MD5": this.getFileMD5()
                 },
                 true
-            );
+            ).then(function() {
+                return request(
+                    '/api/s3/complete/'+me.getFile().name,
+                    'POST',
+                    { "Content-Type": "application/json" }
+                );
+            });
         },
         abort: function() {
 
