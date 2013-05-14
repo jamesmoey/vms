@@ -123,7 +123,7 @@ class MultipartUpload implements EventSubscriber {
     }
 
     /**
-     * Complete a
+     * Complete an upload
      * @param Multipart $part
      *
      * @throws CommandException
@@ -141,7 +141,7 @@ class MultipartUpload implements EventSubscriber {
         /** @var Model $model */
         $model = $this->s3->completeMultipartUpload([
             'Key'       => $part->getKey(),
-            'Bucket'    => $this->bucket,
+            'Bucket'    => $part->getBucket(),
             'UploadId'  => $part->getUploadId(),
             'Parts'     => $parts
         ]);

@@ -210,8 +210,7 @@
             ).then(function() {
                 return request(
                     '/api/s3/complete/'+me.getFile().name,
-                    'POST',
-                    { "Content-Type": "application/json" }
+                    'POST'
                 );
             });
         },
