@@ -180,10 +180,11 @@ class MultipartUpload implements EventSubscriber {
      */
     function getSubscribedEvents()
     {
-        return array(
+        return [
             'postRemove',
             'preUpdate',
-        );
+            'postUpdate',
+        ];
     }
 
     public function postRemove(LifecycleEventArgs $arg) {
@@ -223,7 +224,8 @@ class MultipartUpload implements EventSubscriber {
             if (in_array($entity, $this->completedUpload)) {
                 $event = new UploadCompleteEvent();
                 $event->setBucket($entity->getBucket())
-                    ->setKey($entity->getKey());
+                    ->setKey($entity->getKey())
+                    ->setVersionId($entity->getVersionId());
                 $this->eventDispatcher->dispatch(UploadEvents::COMPLETE, $event);
             }
         }

@@ -66,8 +66,6 @@ class MultipartController extends FOSRestController {
         if ($existingPart !== null) {
             if ($existingPart->getStatus() == Multipart::STARTED || $existingPart->getStatus() == Multipart::IN_PROGRESS) {
                 return $this->handleView(View::create($existingPart, 200));
-            } else {
-                return $this->handleView(View::create(['errors'=>$part->getKey().' already exist', 'part'=>$existingPart], 409));
             }
         }
         try {
@@ -145,6 +143,7 @@ class MultipartController extends FOSRestController {
      *
      * @param integer $id Multipart Upload ID
      * @param integer $count x number of next part to get
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function putMultipartNextAction($id, $count) {
         /** @var EntityManager $em */

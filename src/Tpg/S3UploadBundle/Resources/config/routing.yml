@@ -6,5 +6,5 @@ tpg_s3upload_multipart_api:
 
 tpg_s3upload_upload_api:
     type:           annotation
-    prefix:         /s3
+    prefix:         /s3/upload
     resource:       Tpg\S3UploadBundle\Controller\UploadController

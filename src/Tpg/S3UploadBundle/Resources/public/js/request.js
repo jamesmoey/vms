@@ -25,6 +25,7 @@
         var request = new XMLHttpRequest();
         var deferred = Q.defer();
         var promise = deferred.promise;
+        var params = params || [];
         var size = params.size;
         if (monitorUpload === true) {
             request.upload.addEventListener("progress", function(e) {

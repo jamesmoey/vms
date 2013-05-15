@@ -183,7 +183,7 @@
             return blobMD5(this.getFile()).then(function(hash) {
                 me.setFileMd5(hash);
                 return request(
-                    '/api/s3/signature',
+                    '/api/s3/upload/signature',
                     'POST',
                     JSON.stringify({
                         md5: hash,
@@ -207,9 +207,13 @@
                     "Content-MD5": this.getFileMD5()
                 },
                 true
-            ).then(function() {
+            ).then(function(response) {
+                var url = '/api/s3/upload/complete/'+me.getFile().name;
+                if ('x-amz-version-id' in response.headers) {
+                    url += '/' + response.headers['x-amz-version-id'];
+                }
                 return request(
-                    '/api/s3/complete/'+me.getFile().name,
+                    url,
                     'POST'
                 );
             });

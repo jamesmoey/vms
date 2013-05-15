@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="tpg_resource.s3_upload" class="Tpg\ResourceBundle\Listener\S3ResourceUploadMonitor">
+            <argument type="service">
+                <service class="AmazonS3" factory-service="platinum_pixs_aws.base" factory-method="get">
+                    <argument type="string">s3</argument>
+                </service>
+            </argument>
+            <argument type="service" id="logger" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <tag name="kernel.event_listener" event="s3upload.complete" method="onUploadCompletion"/>
+        </service>
+
+        <service id="tpg_resource.s3resources" class="Tpg\ResourceBundle\Listener\S3ResourcesListener">
+            <argument type="service">
+                <service class="AmazonS3" factory-service="platinum_pixs_aws.base" factory-method="get">
+                    <argument type="string">s3</argument>
+                </service>
+            </argument>
+            <argument type="service" id="logger" />
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+    </services>
+</container>

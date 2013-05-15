@@ -69,10 +69,11 @@ class Upload {
         return $output;
     }
 
-    public function completion($key) {
+    public function completion($key, $version) {
         $event = new UploadCompleteEvent();
         $event->setBucket($this->bucket)
-            ->setKey($key);
+            ->setKey($key)
+            ->setVersionId($version);
         $this->eventDispatcher->dispatch(UploadEvents::COMPLETE, $event);
     }
 }

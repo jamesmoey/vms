@@ -4,8 +4,30 @@ namespace Tpg\S3UploadBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 class UploadCompleteEvent extends Event {
+
+    protected $versionId;
     protected $bucket;
     protected $key;
+
+    /**
+     * @param mixed $versionId
+     *
+     * @return UploadCompleteEvent
+     */
+    public function setVersionId($versionId)
+    {
+        $this->versionId = $versionId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVersionId()
+    {
+        return $this->versionId;
+    }
 
     public function setBucket($bucket)
     {

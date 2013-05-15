@@ -55,11 +55,12 @@ class UploadController extends Controller {
      * )
      *
      * @Route(path="/complete/{key}", methods="POST")
+     * @Route(path="/complete/{key}/{version}", methods="POST")
      */
-    public function completeAction($key) {
+    public function completeAction($key, $version = null) {
         /** @var Upload $service */
         $service = $this->get('tpg_s3upload.upload');
-        $service->completion($key);
+        $service->completion($key, $version);
         return new Response('', 200);
     }
 }

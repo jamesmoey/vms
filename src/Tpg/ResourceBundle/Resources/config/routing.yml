@@ -1,0 +1,5 @@
+tpg_resources_s3resource_api:
+    type:           rest
+    name_prefix:    tpg_s3resource_api_
+    prefix:         /s3
+    resource:       Tpg\ResourceBundle\Controller\S3ResourcesController
