@@ -5,6 +5,7 @@ use Aws\S3\Enum\CannedAcl;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Multipart
@@ -123,6 +124,7 @@ class Multipart {
      * Record created datetime.
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
      *
      * @var \DateTime
      *
@@ -134,6 +136,7 @@ class Multipart {
      * Last record updated datetime.
      *
      * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
      *
      * @var \DateTime
      *
@@ -343,20 +346,7 @@ class Multipart {
         return $this->key;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Multipart
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
-        return $this;
-    }
-
-    /**
+     /**
      * Get createdAt
      *
      * @return \DateTime 
@@ -364,19 +354,6 @@ class Multipart {
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Multipart
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    
-        return $this;
     }
 
     /**

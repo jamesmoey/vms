@@ -1,0 +1,188 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|fill": false,
+        "container|titleCollapse": false,
+        "container|hideCollapseTool": true,
+        "container|animate": true,
+        "container|sequence": false,
+        "border": null,
+        "itemId": "section",
+        "width": 300,
+        "designer|userClassName": "WorkplaceSection",
+        "designer|userAlias": "workplace_section",
+        "layout": "accordion",
+        "collapsed": false,
+        "collapsible": true,
+        "header": false,
+        "title": "Workplace"
+    },
+    "designerId": "68aa00a6-b610-4212-a468-0ef04263af22",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "container|padding": "",
+                "border": 1,
+                "height": null,
+                "itemId": "uploadSection",
+                "defaults": [
+                    "{",
+                    "    padding: 10,",
+                    "    margin: 5",
+                    "}"
+                ],
+                "layout": "vbox",
+                "bodyBorder": false,
+                "bodyPadding": "",
+                "frameHeader": false,
+                "manageHeight": false,
+                "title": "Uploads"
+            },
+            "designerId": "5ccab29e-0626-449b-bb0c-34ec6a34cc64",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "itemId": "inProgressBtn",
+                        "text": "In Progress"
+                    },
+                    "designerId": "a1473dc4-1257-458b-ad62-07ffe2726a8a"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "itemId": "uploadBtn",
+                        "text": "Completed Uploads"
+                    },
+                    "designerId": "fda75366-1497-4d60-ac34-870a159c02fe",
+                    "cn": [
+                        {
+                            "type": "Ext.menu.Menu",
+                            "reference": {
+                                "name": "menu",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "width": 120
+                            },
+                            "designerId": "aa2be93a-92b9-4893-ae9e-aa1b75601f55",
+                            "cn": [
+                                {
+                                    "type": "Ext.menu.Item",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "uploadMineMenuItem",
+                                        "text": "Only Mine"
+                                    },
+                                    "designerId": "1d45e723-afb4-4b37-849c-1df1c371c7dc"
+                                },
+                                {
+                                    "type": "Ext.menu.Item",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "uploadEveryoneMenuItem",
+                                        "text": "Everyone Else"
+                                    },
+                                    "designerId": "b4e44726-d420-4bc1-bd92-4aba89a513a0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "progressBar": true,
+                        "layout|flex": 1
+                    },
+                    "configAlternates": {
+                        "progressBar": "boolean"
+                    },
+                    "designerId": "9d3f6e2e-1aba-4930-857a-ca79e2b1cbb9",
+                    "masterInstanceId": "3133cf2f-674e-439c-8efe-265c9ca8b351"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": null,
+                "title": "Resources"
+            },
+            "designerId": "a7049c1d-7249-4ebe-8a71-157cbb2e27b6",
+            "cn": [
+                {
+                    "type": "Ext.tree.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "frameHeader": false,
+                        "header": false,
+                        "title": "My Tree Panel",
+                        "titleCollapse": false,
+                        "hideHeaders": true,
+                        "rootVisible": false
+                    },
+                    "designerId": "d0ed9d1d-6f14-40c8-b4a3-1f18b347c387",
+                    "cn": [
+                        {
+                            "type": "Ext.tree.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "38d03e12-c1b0-47d9-b26f-8aaa79f5b353"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js1",
+        "url": "deftjs/deft-debug.js"
+    },
+    "designerId": "807d0c1e-288e-4522-8df6-349f3d9641e5"
+}

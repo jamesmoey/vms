@@ -1,0 +1,104 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "controller": "VMS.controller.PartUploadViewController",
+        "height": null,
+        "itemId": "partUploadWindow",
+        "width": 200,
+        "designer|userClassName": "PartUploadWindow",
+        "designer|userAlias": "partUploadWindow",
+        "resizable": [
+            "false"
+        ],
+        "title": "",
+        "minimizable": true
+    },
+    "designerId": "b719e6f2-61fc-4d04-8a3a-ebff0274d043",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "controller",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "Ext.Component",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "content"
+            },
+            "designerId": "5d191615-9d47-42c3-89bb-268db3244452",
+            "cn": [
+                {
+                    "type": "Ext.XTemplate",
+                    "reference": {
+                        "name": "tpl",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "implHandler": [
+                            "<ul class=\"upload_info\">",
+                            "    <li>",
+                            "        <span class=\"header\">Bucket</span>",
+                            "        <span class=\"value\">{bucket}</span>",
+                            "    </li>",
+                            "    <li>",
+                            "        <span class=\"header\">Key</span>",
+                            "        <span class=\"value\">{key}</span>",
+                            "    </li>",
+                            "    <li>",
+                            "        <span class=\"header\">File Size</span>",
+                            "        <span class=\"value\">{[new Number(values.size/1024/1024).toFixed(2).toLocaleString()]}MB</span>",
+                            "    </li>",
+                            "</ul>"
+                        ],
+                        "designer|displayName": "tpl"
+                    },
+                    "designerId": "ee2149c9-d3c3-4697-a202-f63219cd9c69"
+                }
+            ]
+        },
+        {
+            "type": "Ext.ProgressBar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "progress",
+                "margin": "0 5 0 5",
+                "padding": null,
+                "value": 0.4
+            },
+            "designerId": "72b2bf57-4704-45ee-afe3-48054a9d99c3"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "upload"
+            },
+            "configAlternates": {
+                "record": "object"
+            },
+            "designerId": "6897b250-095c-4115-b538-6924a865055d",
+            "masterInstanceId": "3133cf2f-674e-439c-8efe-265c9ca8b351"
+        }
+    ]
+}

@@ -1,0 +1,125 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "stores": [
+            "MultipartUploadStore"
+        ],
+        "views": [
+            "PartUploadWindow"
+        ],
+        "designer|userClassName": "PartUploadController"
+    },
+    "designerId": "afd738d3-d270-4139-8abb-22523bcfe070",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAbortUploadAction",
+                "implHandler": [
+                    "Ext.MessageBox.show({",
+                    "    title: 'Are you sure?',",
+                    "    msg: 'You want to abort this part uploaded resource.',",
+                    "    buttons: Ext.MessageBox.YESNO,",
+                    "    icon: Ext.MessageBox.QUESTION,",
+                    "    fn: function(button) {",
+                    "        if (button == \"yes\") {",
+                    "            var store = eventOptions.store;",
+                    "            store.remove(eventOptions.record);",
+                    "            store.sync();",
+                    "        }",
+                    "    }",
+                    "});"
+                ],
+                "name": "abortUpload",
+                "scope": "me",
+                "designer|targetType": "PartUploadPanel",
+                "designer|controlQuery": "#partUploadPanel"
+            },
+            "designerId": "7a795b84-3e5a-47c9-9868-297e4722bc9c"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onPartUploadPanelResumeUpload",
+                "implHandler": [
+                    "var record = eventOptions.record;",
+                    "var id = record.get('id');",
+                    "var window = null;",
+                    "if (this.uploadWindowList[id]) {",
+                    "    window = this.uploadWindowList[id];",
+                    "} else {",
+                    "    var me = this;",
+                    "    window = this.getView('PartUploadWindow').create({",
+                    "        title: 'Resume Upload',",
+                    "        controllerConfig: {",
+                    "            record: eventOptions.record",
+                    "        }",
+                    "    });",
+                    "    window.addListener('destroy', function(window) {",
+                    "        delete(me.uploadWindowList[id]);",
+                    "    });",
+                    "    this.uploadWindowList[id] = window;",
+                    "}",
+                    "window.show();"
+                ],
+                "name": "resumeUpload",
+                "scope": "me",
+                "designer|targetType": "PartUploadPanel",
+                "designer|controlQuery": "#partUploadPanel"
+            },
+            "designerId": "058c27db-2416-4280-aecb-193a53e64d1a"
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "init",
+                "designer|params": [
+                    "application"
+                ],
+                "implHandler": [
+                    "this.uploadWindowList = {};"
+                ]
+            },
+            "designerId": "f7241a09-9700-4dc6-9392-e095268c08fb"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onToolClick",
+                "implHandler": [
+                    "this.getStore('MultipartUploadStore').reload();"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.panel.Tool",
+                "designer|controlQuery": "#partUploadPanel #refresh"
+            },
+            "designerId": "6a6c4600-3d03-4f72-acf4-12b73e9cf381"
+        }
+    ]
+}

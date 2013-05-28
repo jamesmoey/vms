@@ -1,0 +1,81 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": true,
+        "model": "MultipartUpload",
+        "storeId": "MultipartUpload",
+        "designer|userClassName": "MultipartUploadStore",
+        "designer|userAlias": "MultipartUploadStore",
+        "pageSize": 100,
+        "trailingBufferZone": 100
+    },
+    "designerId": "83025eb7-3662-4fac-a366-0a16af694b9f",
+    "cn": [
+        {
+            "type": "Ext.util.Filter",
+            "reference": {
+                "name": "filters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "operator": null,
+                "property": null
+            },
+            "designerId": "0e616eca-acf0-43cb-8502-a5f1765b6cdf",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "filterFn",
+                        "designer|params": [
+                            "item"
+                        ],
+                        "implHandler": [
+                            "if (item.get('status') === 2 || item.get('status') === 3) {",
+                            "    return false;",
+                            "} else {",
+                            "    return true;",
+                            "}"
+                        ]
+                    },
+                    "designerId": "fd21f240-a772-4c12-b719-af6177142528"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.proxy.Rest",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "/api/s3/multiparts",
+                "format": "json"
+            },
+            "designerId": "18633e7b-6b7a-47c9-9ff1-383084dba57f",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "8028f7d1-9f97-4bbe-a78b-55ec69ef0733"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "MultipartUpload",
+            "S3Resources"
+        ],
+        "views": [
+            "MyViewport",
+            "S3Upload"
+        ],
+        "autoCreateViewport": true,
+        "controllers": [
+            "MainController",
+            "WorkplaceSectionController",
+            "PartUploadController",
+            "UploadController"
+        ],
+        "name": "VMS"
+    },
+    "designerId": "application",
+    "cn": [
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    ""
+                ]
+            },
+            "designerId": "f2b2fba3-fffc-478e-bcfa-0e4a6a7b4730"
+        }
+    ]
+}

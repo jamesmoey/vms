@@ -1,0 +1,165 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "control": [
+            "{",
+            "    upload: {",
+            "        validateUpload: 'onValidateUpload',",
+            "        uploadProcess: 'onComponentUploadProcess',",
+            "        uploadStarted: 'onComponentUploadStarted',",
+            "        uploadFinish: 'onComponentUploadFinish',",
+            "        uploadFailed: 'onComponentUploadFailed'",
+            "    },",
+            "    progress: true,",
+            "    content: true",
+            "}"
+        ],
+        "designer|userClassName": "PartUploadViewController",
+        "extend": "Deft.mvc.ViewController"
+    },
+    "configAlternates": {
+        "control": "object"
+    },
+    "designerId": "d79cfd1f-4120-4674-a825-07bff5adb41b",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "control",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "init",
+                "implHandler": [
+                    "this.record = this.config.record;",
+                    "this.getUpload().record = this.record;",
+                    "this.getProgress().updateProgress(",
+                    "    Object.keys(this.record.get('completed_part')).length / this.record.get('number_of_part')",
+                    ");",
+                    "this.getContent().update(this.record.getData());",
+                    "return this.callParent(arguments);"
+                ]
+            },
+            "designerId": "7329f9db-2227-4fa7-afc1-9cee4d523894"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onValidateUpload",
+                "designer|params": [
+                    "eventOptions"
+                ],
+                "implHandler": [
+                    "var files = eventOptions.files;",
+                    "var errorMsg = 'This resource upload expect to be exactly 1 file';",
+                    "if (files.length === 1) {",
+                    "    var record = eventOptions.record;",
+                    "    if (record.get('size') !== files[0].size) {",
+                    "        errorMsg = \"Size does not match\";",
+                    "    } else if (record.get('mime_type') !== files[0].type) {",
+                    "        errorMsg = \"Upload mime type does not match\";",
+                    "    } else {",
+                    "        return true;",
+                    "    }",
+                    "}",
+                    "Ext.Msg.alert('Unable to Resume Upload', 'Error: ' + errorMsg);",
+                    "return false;"
+                ]
+            },
+            "designerId": "a677c6ea-12d1-4b52-8db2-98be90e2d373"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComponentUploadProcess",
+                "designer|params": [
+                    "eventOptions"
+                ],
+                "implHandler": [
+                    "this.getProgress().updateProgress(eventOptions.progress/100);"
+                ]
+            },
+            "designerId": "9c54d1bb-d843-4ec2-9f6a-b4a4b43424cb"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComponentUploadStarted",
+                "designer|params": [
+                    "eventOptions"
+                ],
+                "implHandler": [
+                    "this.getView().setTitle('Uploading...');",
+                    "this.record.set('uploading', true);"
+                ]
+            },
+            "designerId": "5ae2f57d-dd61-4693-9def-68aa48ea9112"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComponentUploadFinish",
+                "designer|params": [
+                    "eventOptions"
+                ],
+                "implHandler": [
+                    "this.getView().setTitle('Uploade Done');",
+                    "this.record.set('uploading', false);"
+                ]
+            },
+            "designerId": "9b98cf7f-69bb-45d9-85e5-368a089cbbc7"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComponentUploadFailed",
+                "designer|params": [
+                    "eventOptions"
+                ],
+                "implHandler": [
+                    "this.getView().setTitle('Uploade Failed');",
+                    "this.record.set('uploading', false);"
+                ]
+            },
+            "designerId": "df27d2c5-2ef4-4af7-9e69-56dd542a0010"
+        }
+    ]
+}

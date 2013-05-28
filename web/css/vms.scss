@@ -1,0 +1,27 @@
+.upload_info {
+     list-style-type: none;
+     padding: 0 5px;
+     margin: 5px 0;
+     .header {
+         font-weight: bold;
+         display: block;
+     }
+     .value {
+         text-overflow: ellipsis clip;
+     }
+ }
+
+.tpg-s3upload {
+    margin: 5px;
+    padding: 5px;
+    border: 3px dashed #cccccc;
+    min-height: 100px;
+    color: #999;
+    text-align: center;
+
+    &.over {
+        border: 3px dashed #ffdc0c;
+        color: #b68700;
+        font-weight: bold;
+    }
+}

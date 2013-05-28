@@ -63,7 +63,7 @@ class S3ResourcesListener implements EventSubscriber {
                 ]);
                 $arg->setNewValue('versionId', json_encode([]));
             }
-            if ($arg->hasChangedField('versionId')) {
+            if ($arg->hasChangedField('versionId') && $arg->getOldValue("versionId")) {
                 $oldVersionId = json_decode($arg->getOldValue("versionId"));
                 $newVersionId = json_decode($arg->getNewValue("versionId"));
                 $deletedVersions = array_diff_key($oldVersionId, $newVersionId);

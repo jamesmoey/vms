@@ -1,0 +1,39 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "stores": [
+            "S3ResourceStore"
+        ],
+        "views": [
+            "UploadPanel"
+        ],
+        "designer|userClassName": "UploadController"
+    },
+    "designerId": "6a18f3ed-e4ef-4842-801d-2bdd1941ff88",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onToolClick",
+                "implHandler": [
+                    "this.getStore('S3ResourceStore').reload();"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.panel.Tool",
+                "designer|controlQuery": "#uploadPanel #refresh"
+            },
+            "designerId": "bf17cca0-3f95-45aa-a79d-59c6c92e7a3c"
+        }
+    ]
+}

@@ -59,5 +59,6 @@ class S3ResourceUploadMonitor {
             $resource->addVersionId($event->getVersionId(), new \DateTime());
         }
         $this->em->flush();
+        $event->setRecord($resource);
     }
 }

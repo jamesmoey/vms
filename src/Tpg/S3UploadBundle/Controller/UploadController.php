@@ -60,7 +60,7 @@ class UploadController extends Controller {
     public function completeAction($key, $version = null) {
         /** @var Upload $service */
         $service = $this->get('tpg_s3upload.upload');
-        $service->completion($key, $version);
-        return new Response('', 200);
+        $record = $service->completion($key, $version);
+        return $this->get('fos_rest.view_handler')->handle(View::create($record, 200));
     }
 }

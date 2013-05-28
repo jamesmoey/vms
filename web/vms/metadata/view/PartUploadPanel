@@ -1,0 +1,366 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "container|padding": 10,
+        "height": null,
+        "itemId": "partUploadPanel",
+        "width": null,
+        "designer|userClassName": "PartUploadPanel",
+        "layout": "vbox",
+        "closable": true,
+        "title": "Uploads - In Progress"
+    },
+    "designerId": "27d71dee-c0bf-45d0-84a4-4ac1faba9d25",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 1,
+                "itemId": "partUploadGrid",
+                "designer|displayName": "Part Upload Grid",
+                "header": false,
+                "title": "My Grid Panel",
+                "titleCollapse": false,
+                "disableSelection": true,
+                "store": "MultipartUploadStore"
+            },
+            "designerId": "2ad4e6fe-536b-45b6-94c0-e8ce37a5daf7",
+            "cn": [
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "16b2b657-0237-4538-bcc2-fe17c6371bcd"
+                },
+                {
+                    "type": "Ext.grid.column.Action",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "actionColumn",
+                        "padding": "",
+                        "resizable": false,
+                        "defaults": [
+                            "{",
+                            "    padding: '0 10 0 10'",
+                            "}"
+                        ],
+                        "enableColumnHide": false,
+                        "hideable": false
+                    },
+                    "designerId": "e36f4149-1237-4cad-8354-502fcf475513",
+                    "cn": [
+                        {
+                            "type": "actioncolumnitem",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "Resume Upload",
+                                "icon": "/images/mimiglyphs/38.png",
+                                "tooltip": "Resume Upload"
+                            },
+                            "designerId": "5b910727-a673-4ec0-af67-6894533e269b",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "handler",
+                                        "designer|params": [
+                                            "view",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "item",
+                                            "e",
+                                            "record",
+                                            "row"
+                                        ],
+                                        "implHandler": [
+                                            "me.fireEvent('resumeUpload', {",
+                                            "    store: view.getStore(),",
+                                            "    record: record",
+                                            "})"
+                                        ]
+                                    },
+                                    "designerId": "8eed8329-ce56-40fc-a9b8-3ad290dabd51"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "actioncolumnitem",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "Abort Upload",
+                                "altText": null,
+                                "icon": "/images/mimiglyphs/51.png",
+                                "tooltip": "Abort Upload"
+                            },
+                            "designerId": "cc2d0573-5ba7-4000-ba2c-d4312da4e335",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "handler",
+                                        "designer|params": [
+                                            "view",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "item",
+                                            "e",
+                                            "record",
+                                            "row"
+                                        ],
+                                        "implHandler": [
+                                            "me.fireEvent('abortUpload', {",
+                                            "    store: view.getStore(),",
+                                            "    record: record",
+                                            "})"
+                                        ]
+                                    },
+                                    "designerId": "84799a32-d35a-4684-b621-fd73680a935c"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": null,
+                        "defaultWidth": 50,
+                        "dataIndex": "bucket",
+                        "menuText": "",
+                        "text": "Bucket",
+                        "flex": 1
+                    },
+                    "designerId": "832fb960-01b2-4469-92f5-4a4021a8c744"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": null,
+                        "dataIndex": "key",
+                        "menuText": "Name",
+                        "text": "Name",
+                        "flex": 3
+                    },
+                    "designerId": "67b2e2c0-95c5-4abb-a580-4b5e41fa81eb"
+                },
+                {
+                    "type": "Ext.grid.column.Template",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "text": "Status"
+                    },
+                    "designerId": "27838639-457b-499a-9c5c-566cff5607ce",
+                    "cn": [
+                        {
+                            "type": "Ext.XTemplate",
+                            "reference": {
+                                "name": "tpl",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "implHandler": [
+                                    "<tpl if=\"uploading\">",
+                                    "    Uploading...",
+                                    "<tpl else >",
+                                    "    <tpl if=\"status == 0\">",
+                                    "        Started",
+                                    "    <tpl elseif=\"status == 1\">",
+                                    "        In Progress",
+                                    "    <tpl elseif=\"status == 2\">",
+                                    "        Aborted",
+                                    "    <tpl elseif=\"status == 3\">",
+                                    "        Completed",
+                                    "    </tpl>",
+                                    "</tpl>"
+                                ],
+                                "designer|displayName": "tpl"
+                            },
+                            "designerId": "996e6f46-276c-495a-b389-7b198926a245"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": null,
+                        "dataIndex": "created_at",
+                        "text": "Started On",
+                        "flex": null,
+                        "format": "d/m H:i:s"
+                    },
+                    "designerId": "57a794be-5c52-4063-8d11-352e81f7628f"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": null,
+                        "dataIndex": "updated_at",
+                        "text": "Last Update",
+                        "flex": null,
+                        "format": "d/m H:i:s"
+                    },
+                    "designerId": "f0cf457d-14e3-4e26-a4d8-c643645fc713"
+                },
+                {
+                    "type": "Ext.grid.column.Template",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "text": "Completed"
+                    },
+                    "designerId": "3e040485-acf8-473c-b3a3-56ffd8744b3a",
+                    "cn": [
+                        {
+                            "type": "Ext.XTemplate",
+                            "reference": {
+                                "name": "tpl",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "implHandler": [
+                                    "{[Object.keys(values.completed_part).length]} / {number_of_part}"
+                                ],
+                                "designer|displayName": "tpl"
+                            },
+                            "designerId": "cdbe4730-4aa5-4db6-9350-61d3e7f8990c"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Template",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "size",
+                        "text": "File Size",
+                        "flex": 1
+                    },
+                    "designerId": "50c62f67-026c-41ec-aa99-d2a339947829",
+                    "cn": [
+                        {
+                            "type": "Ext.XTemplate",
+                            "reference": {
+                                "name": "tpl",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "implHandler": [
+                                    "{[new Number(values.size/1024/1024).toFixed(2).toLocaleString()]} MB"
+                                ],
+                                "designer|displayName": "tpl"
+                            },
+                            "designerId": "51bb2667-75aa-47f9-9e4b-188307048d02"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "abortUpload"
+            },
+            "designerId": "a5a5b7bf-51cb-49e8-af31-8a6c0adc5b07"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "resumeUpload"
+            },
+            "designerId": "51c07ce3-526c-497a-b829-5df3b45258d1"
+        },
+        {
+            "type": "Ext.panel.Tool",
+            "reference": {
+                "name": "tools",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "refresh",
+                "tooltip": "Refresh Grid",
+                "type": "refresh"
+            },
+            "designerId": "c7280383-50ff-40fe-a4d4-9e8532a8b9fb"
+        }
+    ]
+}

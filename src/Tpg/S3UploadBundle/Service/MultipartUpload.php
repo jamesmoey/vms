@@ -57,9 +57,7 @@ class MultipartUpload implements EventSubscriber {
         ));
         $part->setBucket($model->get("Bucket"))
             ->setUploadId($model->get("UploadId"))
-            ->setKey($model->get("Key"))
-            ->setCreatedAt(new \DateTime('now', new \DateTimeZone('GMT')))
-            ->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
+            ->setKey($model->get("Key"));
         $part->calculatePart();
         return $model;
     }
@@ -117,7 +115,6 @@ class MultipartUpload implements EventSubscriber {
      * @param string    $etag
      */
     public function completePartial(Multipart $part, $partNumber, $etag) {
-        $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
         $part->partDone($partNumber, $etag);
         $part->setStatus(Multipart::IN_PROGRESS);
     }
@@ -149,7 +146,6 @@ class MultipartUpload implements EventSubscriber {
         $part->setVersionId($model->get("VersionId"));
         $part->setExpiration($model->get("Expiration"));
         $part->setEtag(trim($model->get("ETag"), '"'));
-        $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
         $part->setStatus(Multipart::COMPLETED);
         $this->completedUpload[] = $part;
         return $model;
@@ -168,7 +164,6 @@ class MultipartUpload implements EventSubscriber {
             'Key'       => $part->getKey(),
             'Bucket'    => $this->bucket,
         ));
-        $part->setUpdatedAt(new \DateTime('now', new \DateTimeZone('GMT')));
         $part->setStatus(Multipart::ABORTED);
         return $model;
     }

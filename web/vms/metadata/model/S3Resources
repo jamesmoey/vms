@@ -1,0 +1,79 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "S3Resources"
+    },
+    "designerId": "6c13d9ed-f64e-454b-b819-164004111278",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id",
+                "type": "int"
+            },
+            "designerId": "06686331-1d87-41ca-88b4-aa44050e049a"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "bucket",
+                "type": "string"
+            },
+            "designerId": "8eb716a9-2ea2-4cd8-9b73-f29cd21371d2"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "key",
+                "type": "string"
+            },
+            "designerId": "d06c7af4-bd27-4002-95c7-21c525fb221d"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "created_at",
+                "type": "date"
+            },
+            "designerId": "8d8d6cd4-d98b-43fc-9266-0476d9905116"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "updated_at",
+                "type": "date"
+            },
+            "designerId": "0bf20d40-f93f-4110-b6e1-2321466a9ddd"
+        }
+    ]
+}

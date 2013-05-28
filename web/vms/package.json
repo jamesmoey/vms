@@ -1,0 +1,12 @@
+{
+    "name": "S3Upload",
+    "version": "0.0.1",
+    "jam": {
+        "packageDir": "vendor",
+        "dependencies": {
+            "q": "0.8.*",
+            "underscore": "1.4.*",
+            "md5": "2.1.*"
+        }
+    }
+}

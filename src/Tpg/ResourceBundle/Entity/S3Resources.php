@@ -4,6 +4,7 @@ namespace Tpg\ResourceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -54,6 +55,30 @@ abstract class S3Resources {
      * @var array
      */
     protected $versionId = [];
+
+    /**
+     * Record created datetime.
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     *
+     * @var \DateTime
+     *
+     * @JMS\ReadOnly
+     */
+    protected $createdAt;
+
+    /**
+     * Last record updated datetime.
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @var \DateTime
+     *
+     * @JMS\ReadOnly
+     */
+    protected $updatedAt;
 
     /**
      * Create a new instance of this sub class.
@@ -175,5 +200,21 @@ abstract class S3Resources {
     public function removeVersionId($id) {
         unset($this->versionId[$id]);
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

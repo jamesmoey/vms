@@ -75,5 +75,6 @@ class Upload {
             ->setKey($key)
             ->setVersionId($version);
         $this->eventDispatcher->dispatch(UploadEvents::COMPLETE, $event);
+        return $event->getRecord();
     }
 }

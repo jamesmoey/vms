@@ -1,0 +1,59 @@
+{
+    "type": "Ext.container.Viewport",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "MyViewport",
+        "designer|initialView": true,
+        "layout": "border"
+    },
+    "designerId": "bfa3d53a-0dbd-45fe-a314-964fa6357750",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|floatable": false,
+                "layout|region": "center",
+                "layout|split": false,
+                "layout|splitterResize": false,
+                "itemId": "mainBody",
+                "style": [
+                    "{",
+                    "    \"background-image\":\t\"url('/images/seamless-abstract-squares-1042.png')\",",
+                    "    \"background-repeat\": \"repeat\"",
+                    "}"
+                ],
+                "defaultAlign": null,
+                "resizable": null,
+                "layout": "fit"
+            },
+            "designerId": "95165d81-36bd-4c7d-b8b1-44159d6cf76a"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "workplaceSection",
+                "title": "Workplace Section",
+                "layout|floatable": false,
+                "layout|region": "west",
+                "layout|split": true,
+                "layout|splitterResize": false
+            },
+            "designerId": "63dd94d8-c46e-4205-89ab-51877810c1ab",
+            "masterInstanceId": "68aa00a6-b610-4212-a468-0ef04263af22"
+        }
+    ]
+}

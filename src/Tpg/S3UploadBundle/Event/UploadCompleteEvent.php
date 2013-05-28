@@ -8,6 +8,7 @@ class UploadCompleteEvent extends Event {
     protected $versionId;
     protected $bucket;
     protected $key;
+    protected $record;
 
     /**
      * @param mixed $versionId
@@ -51,5 +52,25 @@ class UploadCompleteEvent extends Event {
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @param mixed $record
+     *
+     * @return UploadCompleteEvent
+     */
+    public function setRecord($record)
+    {
+        $this->record = $record;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecord()
+    {
+        return $this->record;
     }
 }

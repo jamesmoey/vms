@@ -1,0 +1,132 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "container|padding": 10,
+        "height": null,
+        "itemId": "uploadPanel",
+        "width": null,
+        "designer|userClassName": "UploadPanel",
+        "layout": "vbox",
+        "closable": true,
+        "title": "Uploads"
+    },
+    "designerId": "343a8e7d-ae57-4781-8c67-512d4de254b1",
+    "cn": [
+        {
+            "type": "Ext.form.FieldContainer",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": null,
+                "container|align": "stretch",
+                "height": null,
+                "width": 400,
+                "layout": "hbox",
+                "fieldLabel": null
+            },
+            "designerId": "3d543a0a-5729-414a-b525-4efc41d5cfbd",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Search"
+                    },
+                    "designerId": "a32eb318-69b9-4764-9693-992875cb9e7b"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "layout|margins": "0 0 0 10",
+                        "fieldLabel": null
+                    },
+                    "designerId": "34e6a7ee-032c-4d35-bafc-9bf66125e115"
+                }
+            ]
+        },
+        {
+            "type": "Ext.view.View",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 2,
+                "itemId": "uploadView",
+                "itemSelector": "div",
+                "store": "S3ResourceStore"
+            },
+            "designerId": "34b334c3-d442-46f4-af34-e04f454608a4",
+            "cn": [
+                {
+                    "type": "Ext.XTemplate",
+                    "reference": {
+                        "name": "itemTpl",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "implHandler": [
+                            "{bucket}/{key}"
+                        ],
+                        "designer|displayName": "itemTpl"
+                    },
+                    "designerId": "4662d92d-adaa-48b2-a998-a6e3f73b8dd8"
+                }
+            ]
+        },
+        {
+            "type": "processcfgfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "processPartUploadPanel",
+                "designer|params": [
+                    "config"
+                ],
+                "implHandler": [
+                    ""
+                ]
+            },
+            "designerId": "4c3ffeff-874a-4053-a8e1-a24ea42d4d63"
+        },
+        {
+            "type": "Ext.panel.Tool",
+            "reference": {
+                "name": "tools",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "refresh",
+                "tooltip": "Refresh Grid",
+                "type": "refresh"
+            },
+            "designerId": "5af5d754-27a0-4942-a3ad-d8fce98e04fd"
+        }
+    ]
+}

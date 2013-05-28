@@ -33,7 +33,6 @@ class MultipartUploadServiceTest extends \Codeception\TestCase\Test
         $part->setNumberOfPart(10);
         $service = $this->buildService();
         $service->completePartial($part, 1, 'testing...');
-        $this->assertNotNull($part->getUpdatedAt());
         $this->assertSame([1=>'testing...'], $part->getCompletedPart());
         $this->assertEquals(\Tpg\S3UploadBundle\Entity\Multipart::IN_PROGRESS, $part->getStatus());
     }
@@ -67,7 +66,6 @@ class MultipartUploadServiceTest extends \Codeception\TestCase\Test
         $service->completeUpload($part);
         $this->assertEquals("a", $part->getBucket());
         $this->assertEquals("http://a.a/key", $part->getUri());
-        $this->assertNotNull($part->getUpdatedAt());
         $this->assertEquals(\Tpg\S3UploadBundle\Entity\Multipart::COMPLETED, $part->getStatus());
         $this->assertEquals("asd", $part->getEtag());
     }

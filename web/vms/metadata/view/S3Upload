@@ -1,0 +1,268 @@
+{
+    "type": "Ext.Component",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "cls": null,
+        "componentCls": "tpg-s3upload",
+        "height": null,
+        "html": "<div class=\"status\">Drag &amp; Drop File Here</div>",
+        "style": null,
+        "width": null,
+        "designer|userClassName": "S3Upload",
+        "designer|userAlias": "s3upload"
+    },
+    "configAlternates": {
+        "html": "string",
+        "expectedMimeType": "array",
+        "expectedSize": "number",
+        "resumeUpload": "object",
+        "record": "object",
+        "progressBar": "boolean"
+    },
+    "designerId": "3133cf2f-674e-439c-8efe-265c9ca8b351",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "record",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "progressBar",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onRender",
+                "implHandler": [
+                    "this.callParent(arguments);",
+                    "",
+                    "var self = this;",
+                    "var htmlElement = this.getEl().dom;",
+                    "",
+                    "if (this.progressBar) {",
+                    "    var el = this.getEl().appendChild({",
+                    "        tag: 'div'",
+                    "    }, true);",
+                    "    this.progressBar.render(el);",
+                    "}",
+                    "",
+                    "htmlElement.addEventListener('dragleave', function(evt) {",
+                    "    self.removeCls('over');",
+                    "}, false);",
+                    "",
+                    "htmlElement.addEventListener('dragover', function(evt) {",
+                    "    if (evt.preventDefault) {",
+                    "        evt.preventDefault(); // Necessary. Allows us to drop.",
+                    "    }",
+                    "    if (!this.uploadProcess || !this.uploadProcess.isPending()) {",
+                    "        evt.dataTransfer.dropEffect = 'copy';",
+                    "        self.addCls('over');",
+                    "        return false;",
+                    "    }",
+                    "}, false);",
+                    "",
+                    "htmlElement.addEventListener('drop', function(evt) {",
+                    "    if (evt.stopPropagation) {",
+                    "        evt.stopPropagation(); // stops the browser from redirecting.",
+                    "    }",
+                    "    if (evt.preventDefault) {",
+                    "        evt.preventDefault();",
+                    "    }",
+                    "    if (!self.uploadProcess || !self.uploadProcess.isPending()) {",
+                    "        self.uploadProcess = null;",
+                    "        var valid = self.fireEvent('validateUpload', {",
+                    "            files: evt.dataTransfer.files,",
+                    "            event: evt,",
+                    "            record: self.record || null",
+                    "        });",
+                    "",
+                    "        if (valid) {",
+                    "            var fileList = evt.dataTransfer.files;",
+                    "            require(['lib/upload'], function(upload) {",
+                    "                for(var i = 0; i < fileList.length; i++) {",
+                    "                    var file = fileList.item(i);",
+                    "                    if (self.uploadProcess) {",
+                    "                        self.uploadProcess.then(function() {",
+                    "                            return self.upload(upload, file)",
+                    "                        });",
+                    "                    } else {",
+                    "                        self.uploadProcess = self.upload(upload, file);",
+                    "                    }",
+                    "                }",
+                    "            });",
+                    "",
+                    "        }",
+                    "        self.removeCls('over');",
+                    "    } else {",
+                    "        Ext.Msg.alert('Unable to Upload', 'Error: ' + 'Upload is already in progress');",
+                    "    }",
+                    "    return false;",
+                    "}, false);"
+                ]
+            },
+            "designerId": "959e485a-4cdb-46cd-a835-196a1056c46b"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "uploadStarted"
+            },
+            "designerId": "c6b90f65-2ef4-4952-8625-20510a7da311"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "uploadProcess"
+            },
+            "designerId": "61145f34-d334-414b-8d08-d94170e07be5"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "uploadFinish"
+            },
+            "designerId": "c978df2d-7943-4dcd-9d6b-77c37ac2270d"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "validateUpload"
+            },
+            "designerId": "d0c14e95-1065-4a4a-928b-cd9c1f5736af"
+        },
+        {
+            "type": "processcfgfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "processS3Upload",
+                "designer|params": [
+                    "config"
+                ],
+                "implHandler": [
+                    "this.record = config.record;",
+                    "if (config.progressBar === true) {",
+                    "    this.progressBar = Ext.create('Ext.ProgressBar',{",
+                    "        hidden: true",
+                    "    });",
+                    "}"
+                ]
+            },
+            "designerId": "69d8d47c-1921-4fb9-80ce-3ea6d78c2ee2"
+        },
+        {
+            "type": "customevent",
+            "reference": {
+                "name": "customEvents",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "uploadFailed"
+            },
+            "designerId": "21eee0f7-110c-4fd9-b119-08bdef05a241"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "upload",
+                "designer|params": [
+                    "upload",
+                    "file"
+                ],
+                "implHandler": [
+                    "var self = this;",
+                    "var status = this.getEl().down('.status');",
+                    "",
+                    "status.setHTML('Uploading ' + file.name);",
+                    "",
+                    "this.fireEvent('uploadStarted', {",
+                    "    file: file, ",
+                    "    record: this.record",
+                    "});",
+                    "",
+                    "if (this.progressBar) {",
+                    "    this.progressBar.show();",
+                    "}",
+                    "if (this.record) {",
+                    "    process = upload(file, this.record.getData());",
+                    "} else {",
+                    "    process = upload(file);",
+                    "}",
+                    "",
+                    "return process.then(function(multipart) {",
+                    "    status.setHTML(\"Drag &amp; Drop File Here\");",
+                    "    if (self.progressBar) {",
+                    "        self.progressBar.hide();",
+                    "    }",
+                    "    self.fireEvent('uploadFinish', {",
+                    "        record: multipart",
+                    "    });",
+                    "}, function(error) {",
+                    "    status.setHTML(\"Drag &amp; Drop File Here\");",
+                    "    if (self.progressBar) {",
+                    "        self.progressBar.hide();",
+                    "    }",
+                    "    self.fireEvent('uploadFailed', {",
+                    "        error: error",
+                    "    });",
+                    "}, function (count) {",
+                    "    if (Ext.isNumber(count)) {",
+                    "        if (self.progressBar) {",
+                    "            self.progressBar.updateProgress(count/100);",
+                    "        }",
+                    "        self.fireEvent('uploadProcess', {",
+                    "            progress: count",
+                    "        });",
+                    "    } else if (Ext.isObject(count) && self.record) {",
+                    "        self.record.set('status', count.status);",
+                    "        self.record.set('completed_part', count.completed_part);",
+                    "    }",
+                    "});"
+                ]
+            },
+            "designerId": "b804124d-a3e1-4bc6-a8e4-d4f04da61bbf"
+        }
+    ]
+}

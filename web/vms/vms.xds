@@ -1,0 +1,198 @@
+{
+    "name": "vms",
+    "settings": {
+        "urlPrefix": "http://localhost:8181/vms/",
+        "exportPath": "",
+        "spacesToIndent": 4,
+        "lineEnding": "LF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true
+    },
+    "xdsVersion": "2.2.2",
+    "xdsBuild": 991,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000503,
+    "framework": "ext42",
+    "topInstanceFileMap": {
+        "bfa3d53a-0dbd-45fe-a314-964fa6357750": {
+            "paths": [
+                "metadata/view/MyViewport",
+                "app/view/override/MyViewport.js",
+                "app/view/MyViewport.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "MyViewport"
+        },
+        "89080107-f782-4a6c-ba5d-607ef5c5e792": {
+            "paths": [
+                "metadata/resource/js"
+            ],
+            "className": "js"
+        },
+        "58db434c-ecc6-4287-94e9-a50a99afbb07": {
+            "paths": [
+                "metadata/controller/MainController",
+                "app/controller/override/MainController.js",
+                "app/controller/MainController.js"
+            ],
+            "className": "MainController"
+        },
+        "2f0a0dce-fe31-439d-bbb2-0046e9cc6d68": {
+            "paths": [
+                "metadata/resource/Library"
+            ],
+            "className": "Library"
+        },
+        "27d71dee-c0bf-45d0-84a4-4ac1faba9d25": {
+            "paths": [
+                "metadata/view/PartUploadPanel",
+                "app/view/override/PartUploadPanel.js",
+                "app/view/PartUploadPanel.js"
+            ],
+            "className": "PartUploadPanel"
+        },
+        "68aa00a6-b610-4212-a468-0ef04263af22": {
+            "paths": [
+                "metadata/view/WorkplaceSection",
+                "app/view/override/WorkplaceSection.js",
+                "app/view/WorkplaceSection.js"
+            ],
+            "className": "WorkplaceSection"
+        },
+        "c92bd968-4315-445e-97b2-b16a61ce208c": {
+            "paths": [
+                "metadata/controller/WorkplaceSectionController",
+                "app/controller/override/WorkplaceSectionController.js",
+                "app/controller/WorkplaceSectionController.js"
+            ],
+            "className": "WorkplaceSectionController"
+        },
+        "83025eb7-3662-4fac-a366-0a16af694b9f": {
+            "paths": [
+                "metadata/store/MultipartUploadStore",
+                "app/store/override/MultipartUploadStore.js",
+                "app/store/MultipartUploadStore.js"
+            ],
+            "className": "MultipartUploadStore"
+        },
+        "86ca152f-50ad-4034-9f5f-12b22b7f77f8": {
+            "paths": [
+                "metadata/model/MultipartUpload",
+                "app/model/override/MultipartUpload.js",
+                "app/model/MultipartUpload.js"
+            ],
+            "className": "MultipartUpload"
+        },
+        "343a8e7d-ae57-4781-8c67-512d4de254b1": {
+            "paths": [
+                "metadata/view/UploadPanel",
+                "app/view/override/UploadPanel.js",
+                "app/view/UploadPanel.js"
+            ],
+            "className": "UploadPanel"
+        },
+        "afd738d3-d270-4139-8abb-22523bcfe070": {
+            "paths": [
+                "metadata/controller/PartUploadController",
+                "app/controller/override/PartUploadController.js",
+                "app/controller/PartUploadController.js"
+            ],
+            "className": "PartUploadController"
+        },
+        "b719e6f2-61fc-4d04-8a3a-ebff0274d043": {
+            "paths": [
+                "metadata/view/PartUploadWindow",
+                "app/view/override/PartUploadWindow.js",
+                "app/view/PartUploadWindow.js"
+            ],
+            "className": "PartUploadWindow"
+        },
+        "a5cd60e2-8312-4bda-a4fc-5dd1ac022d5b": {
+            "paths": [
+                "metadata/resource/css"
+            ],
+            "className": "css"
+        },
+        "3133cf2f-674e-439c-8efe-265c9ca8b351": {
+            "paths": [
+                "metadata/view/S3Upload",
+                "app/view/override/S3Upload.js",
+                "app/view/S3Upload.js"
+            ],
+            "className": "S3Upload"
+        },
+        "d79cfd1f-4120-4674-a825-07bff5adb41b": {
+            "paths": [
+                "metadata/controller/PartUploadViewController",
+                "app/controller/override/PartUploadViewController.js",
+                "app/controller/PartUploadViewController.js"
+            ],
+            "className": "PartUploadViewController"
+        },
+        "807d0c1e-288e-4522-8df6-349f3d9641e5": {
+            "paths": [
+                "metadata/resource/js1"
+            ],
+            "className": "js1"
+        },
+        "6c13d9ed-f64e-454b-b819-164004111278": {
+            "paths": [
+                "metadata/model/S3Resources",
+                "app/model/override/S3Resources.js",
+                "app/model/S3Resources.js"
+            ],
+            "className": "S3Resources"
+        },
+        "13cb43e7-f9bb-4232-861d-5f015cd2b2e3": {
+            "paths": [
+                "metadata/store/S3ResourceStore",
+                "app/store/override/S3ResourceStore.js",
+                "app/store/S3ResourceStore.js"
+            ],
+            "className": "S3ResourceStore"
+        },
+        "6a18f3ed-e4ef-4842-801d-2bdd1941ff88": {
+            "paths": [
+                "metadata/controller/UploadController",
+                "app/controller/override/UploadController.js",
+                "app/controller/UploadController.js"
+            ],
+            "className": "UploadController"
+        }
+    },
+    "viewOrderMap": {
+        "view": [
+            "bfa3d53a-0dbd-45fe-a314-964fa6357750",
+            "27d71dee-c0bf-45d0-84a4-4ac1faba9d25",
+            "343a8e7d-ae57-4781-8c67-512d4de254b1",
+            "68aa00a6-b610-4212-a468-0ef04263af22",
+            "b719e6f2-61fc-4d04-8a3a-ebff0274d043",
+            "3133cf2f-674e-439c-8efe-265c9ca8b351"
+        ],
+        "store": [
+            "83025eb7-3662-4fac-a366-0a16af694b9f",
+            "13cb43e7-f9bb-4232-861d-5f015cd2b2e3"
+        ],
+        "controller": [
+            "58db434c-ecc6-4287-94e9-a50a99afbb07",
+            "c92bd968-4315-445e-97b2-b16a61ce208c",
+            "afd738d3-d270-4139-8abb-22523bcfe070",
+            "d79cfd1f-4120-4674-a825-07bff5adb41b",
+            "6a18f3ed-e4ef-4842-801d-2bdd1941ff88"
+        ],
+        "model": [
+            "86ca152f-50ad-4034-9f5f-12b22b7f77f8",
+            "6c13d9ed-f64e-454b-b819-164004111278"
+        ],
+        "resource": [
+            "2f0a0dce-fe31-439d-bbb2-0046e9cc6d68",
+            "89080107-f782-4a6c-ba5d-607ef5c5e792",
+            "a5cd60e2-8312-4bda-a4fc-5dd1ac022d5b",
+            "807d0c1e-288e-4522-8df6-349f3d9641e5"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}
