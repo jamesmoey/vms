@@ -46,6 +46,10 @@ Ext.define('VMS.store.MultipartUploadStore', {
                 reader: {
                     type: 'json'
                 }
+            },
+            sorters: {
+                direction: 'DESC',
+                property: 'updated_at'
             }
         }, cfg)]);
     }

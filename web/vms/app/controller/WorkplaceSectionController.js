@@ -34,14 +34,10 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
     ],
 
     onClickOnSection: function(button, e, eOpts) {
-        if (button.getItemId() === "inProgressBtn") {	
+        if (button.getItemId() === "inProgress") {	
             this.getMainBody().removeAll();
             this.getMainBody().add(this.getView('PartUploadPanel').create());
-        }
-    },
-
-    onMenuitemClick: function(item, e, eOpts) {
-        if (item.getItemId() === "uploadMineMenuItem" || item.getItemId() === "uploadEveryoneMenuItem") {
+        } else if (button.getItemId() === "myComplete" || button.getItemId() === "othersComplete") {
             this.getMainBody().removeAll();
             this.getMainBody().add(this.getView('UploadPanel').create());
         }
@@ -53,11 +49,8 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
 
     init: function(application) {
         this.control({
-            "#workplaceSection #uploadSection button": {
+            "#workplaceSection #uploadSection menuitem": {
                 click: this.onClickOnSection
-            },
-            "menuitem": {
-                click: this.onMenuitemClick
             },
             "#uploadSection s3upload": {
                 uploadFinish: this.onComponentUploadFinish

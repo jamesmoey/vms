@@ -65,56 +65,6 @@
             ]
         },
         {
-            "type": "Ext.view.View",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "layout|flex": 2,
-                "itemId": "uploadView",
-                "itemSelector": "div",
-                "store": "S3ResourceStore"
-            },
-            "designerId": "34b334c3-d442-46f4-af34-e04f454608a4",
-            "cn": [
-                {
-                    "type": "Ext.XTemplate",
-                    "reference": {
-                        "name": "itemTpl",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "implHandler": [
-                            "{bucket}/{key}"
-                        ],
-                        "designer|displayName": "itemTpl"
-                    },
-                    "designerId": "4662d92d-adaa-48b2-a998-a6e3f73b8dd8"
-                }
-            ]
-        },
-        {
-            "type": "processcfgfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "processPartUploadPanel",
-                "designer|params": [
-                    "config"
-                ],
-                "implHandler": [
-                    ""
-                ]
-            },
-            "designerId": "4c3ffeff-874a-4053-a8e1-a24ea42d4d63"
-        },
-        {
             "type": "Ext.panel.Tool",
             "reference": {
                 "name": "tools",
@@ -127,6 +77,101 @@
                 "type": "refresh"
             },
             "designerId": "5af5d754-27a0-4942-a3ad-d8fce98e04fd"
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 2,
+                "itemId": "uploadGrid",
+                "header": false,
+                "title": "My Grid Panel",
+                "store": "S3ResourceStore"
+            },
+            "designerId": "02629f94-ed5f-4c37-8628-d84219b17c34",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "key",
+                        "menuText": null,
+                        "text": "Resource",
+                        "flex": 2
+                    },
+                    "designerId": "055f6ba6-e319-456b-9ad3-3e660dbd848c"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "created_at",
+                        "text": "Created On",
+                        "flex": 1,
+                        "format": "d-m-Y H:i:s"
+                    },
+                    "designerId": "bf7a1c58-1b74-403d-bd93-832279ebd13f"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "mime_type",
+                        "emptyCellText": "Unknown",
+                        "menuText": "",
+                        "text": "Mime Type"
+                    },
+                    "designerId": "96167f23-d104-4c43-aadc-eb84ba120d55"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "0d4f5f60-9498-440d-8888-52426868b517",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.plugin.DragDrop",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": "Ext.grid.plugin.DragDrop",
+                            "designerId": "b9e5ebbc-6257-4172-96de-35c3232d9dd2"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.selection.RowModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.RowModel",
+                    "userConfig": {
+                        "mode": "MULTI"
+                    },
+                    "designerId": "d2a8ef78-076f-4fc3-9a8f-d497b48a1658"
+                }
+            ]
         }
     ]
 }

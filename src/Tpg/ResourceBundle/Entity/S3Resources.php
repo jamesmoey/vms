@@ -81,6 +81,16 @@ abstract class S3Resources {
     protected $updatedAt;
 
     /**
+     * Mime type of the resource
+     *
+     * @ORM\Column("mime_type")
+     *
+     * @var string
+     * @JMS\ReadOnly
+     */
+    protected $mimeType;
+
+    /**
      * Create a new instance of this sub class.
      *
      * @param $mimeType
@@ -88,14 +98,16 @@ abstract class S3Resources {
      */
     public static function newInstance($mimeType) {
         if (stripos($mimeType, 'video/') === 0) {
-            return new VideoS3Resources();
+            $resource = new VideoS3Resources();
         } else if (stripos($mimeType, 'image/') === 0) {
-            return new ImageS3Resources();
+            $resource = new ImageS3Resources();
         } else if (stripos($mimeType, 'audio/') === 0) {
-            return new AudioS3Resources();
+            $resource = new AudioS3Resources();
         } else {
-            return new OtherS3Resources();
+            $resource = new OtherS3Resources();
         }
+        $resource->setMimeType($mimeType);
+        return $resource;
     }
 
     /**
@@ -216,5 +228,25 @@ abstract class S3Resources {
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param string $mimeType
+     *
+     * @return S3Resources
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
     }
 }

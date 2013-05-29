@@ -12,6 +12,7 @@
         "container|animate": true,
         "container|sequence": false,
         "border": null,
+        "id": "workplaceSection",
         "itemId": "section",
         "width": 300,
         "designer|userClassName": "WorkplaceSection",
@@ -53,7 +54,7 @@
             "designerId": "5ccab29e-0626-449b-bb0c-34ec6a34cc64",
             "cn": [
                 {
-                    "type": "Ext.button.Button",
+                    "type": "Ext.menu.Menu",
                     "reference": {
                         "name": "items",
                         "type": "array"
@@ -61,83 +62,74 @@
                     "codeClass": null,
                     "userConfig": {
                         "layout|flex": 1,
-                        "itemId": "inProgressBtn",
-                        "text": "In Progress"
+                        "floating": false,
+                        "width": 120
                     },
-                    "designerId": "a1473dc4-1257-458b-ad62-07ffe2726a8a"
-                },
-                {
-                    "type": "Ext.button.Button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": 1,
-                        "itemId": "uploadBtn",
-                        "text": "Completed Uploads"
-                    },
-                    "designerId": "fda75366-1497-4d60-ac34-870a159c02fe",
+                    "designerId": "ffe419a7-eaf2-4243-a13c-cbe0165fe57c",
                     "cn": [
                         {
-                            "type": "Ext.menu.Menu",
+                            "type": "linkedinstance",
                             "reference": {
-                                "name": "menu",
-                                "type": "object"
+                                "name": "items",
+                                "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "width": 120
+                                "progressBar": true
                             },
-                            "designerId": "aa2be93a-92b9-4893-ae9e-aa1b75601f55",
-                            "cn": [
-                                {
-                                    "type": "Ext.menu.Item",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "itemId": "uploadMineMenuItem",
-                                        "text": "Only Mine"
-                                    },
-                                    "designerId": "1d45e723-afb4-4b37-849c-1df1c371c7dc"
-                                },
-                                {
-                                    "type": "Ext.menu.Item",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "itemId": "uploadEveryoneMenuItem",
-                                        "text": "Everyone Else"
-                                    },
-                                    "designerId": "b4e44726-d420-4bc1-bd92-4aba89a513a0"
-                                }
-                            ]
+                            "configAlternates": {
+                                "progressBar": "boolean"
+                            },
+                            "designerId": "9d3f6e2e-1aba-4930-857a-ca79e2b1cbb9",
+                            "masterInstanceId": "3133cf2f-674e-439c-8efe-265c9ca8b351"
+                        },
+                        {
+                            "type": "Ext.menu.Item",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": "menu-item-32",
+                                "itemId": "inProgress",
+                                "icon": "/images/works-in-progress-icon.png",
+                                "iconCls": "icon_32",
+                                "text": "In Progress"
+                            },
+                            "designerId": "47e3d5be-4bb6-4068-807d-292c3a33dec4"
+                        },
+                        {
+                            "type": "Ext.menu.Item",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": "menu-item-32",
+                                "itemId": "myComplete",
+                                "icon": "/images/my-folder.png",
+                                "text": "My Completed"
+                            },
+                            "designerId": "ff5f56e3-194b-4316-af32-8db845347163"
+                        },
+                        {
+                            "type": "Ext.menu.Item",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": "menu-item-32",
+                                "itemId": "othersComplete",
+                                "icon": "/images/other-folder.png",
+                                "text": "Others Completed"
+                            },
+                            "designerId": "b7939ed7-15e1-42f1-9a60-36526d80ee82"
                         }
                     ]
-                },
-                {
-                    "type": "linkedinstance",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "progressBar": true,
-                        "layout|flex": 1
-                    },
-                    "configAlternates": {
-                        "progressBar": "boolean"
-                    },
-                    "designerId": "9d3f6e2e-1aba-4930-857a-ca79e2b1cbb9",
-                    "masterInstanceId": "3133cf2f-674e-439c-8efe-265c9ca8b351"
                 }
             ]
         },

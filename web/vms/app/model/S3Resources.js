@@ -36,6 +36,10 @@ Ext.define('VMS.model.S3Resources', {
         {
             name: 'updated_at',
             type: 'date'
+        },
+        {
+            name: 'mime_type',
+            type: 'string'
         }
     ]
 });

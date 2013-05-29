@@ -50,14 +50,44 @@ Ext.define('VMS.view.UploadPanel', {
                     ]
                 },
                 {
-                    xtype: 'dataview',
+                    xtype: 'gridpanel',
                     flex: 2,
-                    itemId: 'uploadView',
-                    itemSelector: 'div',
-                    itemTpl: [
-                        '{bucket}/{key}'
+                    itemId: 'uploadGrid',
+                    header: false,
+                    title: 'My Grid Panel',
+                    store: 'S3ResourceStore',
+                    columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'key',
+                            text: 'Resource',
+                            flex: 2
+                        },
+                        {
+                            xtype: 'datecolumn',
+                            dataIndex: 'created_at',
+                            text: 'Created On',
+                            flex: 1,
+                            format: 'd-m-Y H:i:s'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'mime_type',
+                            emptyCellText: 'Unknown',
+                            menuText: '',
+                            text: 'Mime Type'
+                        }
                     ],
-                    store: 'S3ResourceStore'
+                    viewConfig: {
+                        plugins: [
+                            Ext.create('Ext.grid.plugin.DragDrop', {
+
+                            })
+                        ]
+                    },
+                    selModel: Ext.create('Ext.selection.RowModel', {
+                        mode: 'MULTI'
+                    })
                 }
             ],
             tools: [
@@ -70,12 +100,7 @@ Ext.define('VMS.view.UploadPanel', {
             ]
         });
 
-        me.processPartUploadPanel(me);
         me.callParent(arguments);
-    },
-
-    processPartUploadPanel: function(config) {
-
     }
 
 });

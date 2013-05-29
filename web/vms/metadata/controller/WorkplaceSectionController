@@ -29,15 +29,18 @@
             "userConfig": {
                 "fn": "onClickOnSection",
                 "implHandler": [
-                    "if (button.getItemId() === \"inProgressBtn\") {\t",
+                    "if (button.getItemId() === \"inProgress\") {\t",
                     "    this.getMainBody().removeAll();",
                     "    this.getMainBody().add(this.getView('PartUploadPanel').create());",
+                    "} else if (button.getItemId() === \"myComplete\" || button.getItemId() === \"othersComplete\") {",
+                    "    this.getMainBody().removeAll();",
+                    "    this.getMainBody().add(this.getView('UploadPanel').create());",
                     "}"
                 ],
                 "name": "click",
                 "scope": "me",
                 "designer|targetType": "Ext.button.Button",
-                "designer|controlQuery": "#workplaceSection #uploadSection button"
+                "designer|controlQuery": "#workplaceSection #uploadSection menuitem"
             },
             "designerId": "b8b56fd3-e2a6-403b-a526-3aa305968e32"
         },
@@ -53,28 +56,6 @@
                 "selector": "#mainBody"
             },
             "designerId": "8ff08d9c-97bf-4508-b0c1-878c0f7e803e"
-        },
-        {
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onMenuitemClick",
-                "implHandler": [
-                    "if (item.getItemId() === \"uploadMineMenuItem\" || item.getItemId() === \"uploadEveryoneMenuItem\") {",
-                    "    this.getMainBody().removeAll();",
-                    "    this.getMainBody().add(this.getView('UploadPanel').create());",
-                    "}"
-                ],
-                "name": "click",
-                "scope": "me",
-                "designer|targetType": "Ext.menu.Item",
-                "designer|controlQuery": "menuitem"
-            },
-            "designerId": "cc1c05f2-948b-49a0-8347-209f744ba3bb"
         },
         {
             "type": "controlleraction",

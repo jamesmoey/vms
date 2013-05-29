@@ -21,6 +21,7 @@ Ext.define('VMS.view.WorkplaceSection', {
         'VMS.view.S3Upload'
     ],
 
+    id: 'workplaceSection',
     itemId: 'section',
     width: 300,
     layout: {
@@ -61,37 +62,38 @@ Ext.define('VMS.view.WorkplaceSection', {
                     title: 'Uploads',
                     items: [
                         {
-                            xtype: 'button',
+                            xtype: 'menu',
                             flex: 1,
-                            itemId: 'inProgressBtn',
-                            text: 'In Progress'
-                        },
-                        {
-                            xtype: 'button',
-                            flex: 1,
-                            itemId: 'uploadBtn',
-                            text: 'Completed Uploads',
-                            menu: {
-                                xtype: 'menu',
-                                width: 120,
-                                items: [
-                                    {
-                                        xtype: 'menuitem',
-                                        itemId: 'uploadMineMenuItem',
-                                        text: 'Only Mine'
-                                    },
-                                    {
-                                        xtype: 'menuitem',
-                                        itemId: 'uploadEveryoneMenuItem',
-                                        text: 'Everyone Else'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            xtype: 's3upload',
-                            progressBar: true,
-                            flex: 1
+                            floating: false,
+                            width: 120,
+                            items: [
+                                {
+                                    xtype: 's3upload',
+                                    progressBar: true
+                                },
+                                {
+                                    xtype: 'menuitem',
+                                    cls: 'menu-item-32',
+                                    itemId: 'inProgress',
+                                    icon: '/images/works-in-progress-icon.png',
+                                    iconCls: 'icon_32',
+                                    text: 'In Progress'
+                                },
+                                {
+                                    xtype: 'menuitem',
+                                    cls: 'menu-item-32',
+                                    itemId: 'myComplete',
+                                    icon: '/images/my-folder.png',
+                                    text: 'My Completed'
+                                },
+                                {
+                                    xtype: 'menuitem',
+                                    cls: 'menu-item-32',
+                                    itemId: 'othersComplete',
+                                    icon: '/images/other-folder.png',
+                                    text: 'Others Completed'
+                                }
+                            ]
                         }
                     ]
                 },

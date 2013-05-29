@@ -34,6 +34,10 @@ Ext.define('VMS.store.S3ResourceStore', {
                 reader: {
                     type: 'json'
                 }
+            },
+            sorters: {
+                direction: 'DESC',
+                property: 'updated_at'
             }
         }, cfg)]);
     }

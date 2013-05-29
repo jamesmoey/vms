@@ -25,3 +25,25 @@
         font-weight: bold;
     }
 }
+
+.menu-item-32 {
+    .x-menu-item-link {
+        line-height: 32px;
+        padding-left: 40px;
+    }
+    .x-menu-item-icon {
+        width: 32px;
+        height: 32px;
+        top: 0px;
+    }
+    .x-menu-item-text {
+        position: relative;
+        top: 6px
+    }
+}
+
+#workplaceSection {
+    .x-menu-item-text {
+        font-weight: bold;
+    }
+}

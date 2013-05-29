@@ -36,6 +36,19 @@
                     "designerId": "dd4ae3eb-a78a-4007-927e-1898de31a754"
                 }
             ]
+        },
+        {
+            "type": "Ext.util.Sorter",
+            "reference": {
+                "name": "sorters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "direction": "DESC",
+                "property": "updated_at"
+            },
+            "designerId": "beedfe3b-3f9d-4dc6-9f23-acbf17a026fb"
         }
     ]
 }
