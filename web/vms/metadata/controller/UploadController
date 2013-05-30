@@ -9,9 +9,6 @@
         "stores": [
             "S3ResourceStore"
         ],
-        "views": [
-            "UploadPanel"
-        ],
         "designer|userClassName": "UploadController"
     },
     "designerId": "6a18f3ed-e4ef-4842-801d-2bdd1941ff88",
@@ -31,9 +28,160 @@
                 "name": "click",
                 "scope": "me",
                 "designer|targetType": "Ext.panel.Tool",
-                "designer|controlQuery": "#uploadPanel #refresh"
+                "designer|controlQuery": "#uploadPanel tool#refresh"
             },
             "designerId": "bf17cca0-3f95-45aa-a79d-59c6c92e7a3c"
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "init",
+                "designer|params": [
+                    "application"
+                ],
+                "implHandler": [
+                    "this.getStore('S3ResourceStore').addListener('datachanged', this.onS3ResourceStoreChange, this, {",
+                    "    delay: 100",
+                    "});",
+                    "this.getStore('S3ResourceStore').addListener('update', this.onS3ResourceStoreChange, this, {",
+                    "    delay: 100",
+                    "});"
+                ]
+            },
+            "designerId": "d21d6ae0-a08d-4c49-ab1c-ac2bc2503991"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onS3ResourceStoreChange",
+                "designer|params": [
+                    "store",
+                    "opts"
+                ],
+                "implHandler": [
+                    "console.log('onS3ResourceStoreChange');",
+                    "if (this.getGridToolbar()) {",
+                    "    console.log(store.getModifiedRecords());",
+                    "    console.log(store.getNewRecords());",
+                    "    console.log(store.getRemovedRecords());",
+                    "    ",
+                    "    if (store.getModifiedRecords().length > 0 || store.getNewRecords().length > 0 || store.getRemovedRecords().length > 0) {",
+                    "        this.getGridToolbar().child('buttongroup').enable();",
+                    "    } else {",
+                    "        this.getGridToolbar().child('buttongroup').disable();",
+                    "    }",
+                    "}"
+                ]
+            },
+            "designerId": "801e17eb-7807-4343-8299-0e3ea84fe1f0"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "gridToolbar",
+                "selector": "#uploadPanel #uploadGrid toolbar",
+                "xtype": "Ext.toolbar.Toolbar"
+            },
+            "designerId": "269951f2-086c-4690-b4e9-15168b8afd47"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onButtonClick",
+                "implHandler": [
+                    "if (button.getItemId() == \"saveBtn\") {",
+                    "    this.getStore('S3ResourceStore').sync();",
+                    "} else if (button.getItemId() == \"resetBtn\") {",
+                    "    this.getStore('S3ResourceStore').rejectChanges();",
+                    "} else if (button.getItemId() == \"deleteBtn\") {",
+                    "    this.getStore('S3ResourceStore').remove(",
+                    "    this.getGrid().getSelectionModel().selected.getRange()",
+                    "    );",
+                    "} else if (button.getItemId() == \"typeAssignBtn\") {",
+                    "    var mimeTypeStore = this.getStore('MimeTypeStore');",
+                    "    this.getGrid().getSelectionModel().selected.each(function(item) {",
+                    "        var fileName = item.get('key');",
+                    "        if (!item.get('mime_type')) {",
+                    "            var mimeType = mimeTypeStore.findRecord('extension', fileName.substring(fileName.lastIndexOf(\".\")));",
+                    "            if (mimeType) {",
+                    "                item.set('mime_type', mimeType.get('type'));",
+                    "            }",
+                    "        }",
+                    "    });",
+                    "}"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.button.Button",
+                "designer|controlQuery": "#uploadGrid toolbar button"
+            },
+            "designerId": "89ce347b-015d-43e6-8fda-cd7d5f2dd449"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "grid",
+                "selector": "#uploadPanel #uploadGrid"
+            },
+            "designerId": "6d0e7d42-4dd5-43a2-ac85-2119426b4c5c"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onGridpanelSelectionChange",
+                "implHandler": [
+                    "if (selected.length > 0) {",
+                    "    this.getGridToolbar().child('#deleteBtn').enable();",
+                    "    Ext.each(selected, function(item) {",
+                    "        if (!item.get('mime_type')) {",
+                    "            this.getGridToolbar().child('#typeAssignBtn').enable();",
+                    "            return false;",
+                    "        } else {",
+                    "            this.getGridToolbar().child('#typeAssignBtn').disable();",
+                    "        }",
+                    "        return true;",
+                    "    }, this);",
+                    "} else {",
+                    "    this.getGridToolbar().child('#deleteBtn').disable();",
+                    "    this.getGridToolbar().child('#typeAssignBtn').disable();",
+                    "}"
+                ],
+                "name": "selectionchange",
+                "scope": "me",
+                "designer|targetType": "Ext.grid.Panel",
+                "designer|controlQuery": "#uploadGrid"
+            },
+            "designerId": "0c017b4e-d6cc-4775-bd92-2eeed42019dc"
         }
     ]
 }

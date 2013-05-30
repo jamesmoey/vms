@@ -23,6 +23,9 @@ Ext.application({
         'MultipartUpload',
         'S3Resources'
     ],
+    stores: [
+        'MimeTypeStore'
+    ],
     views: [
         'MyViewport',
         'S3Upload'

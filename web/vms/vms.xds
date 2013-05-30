@@ -159,6 +159,14 @@
                 "app/controller/UploadController.js"
             ],
             "className": "UploadController"
+        },
+        "5ad4aadc-87a9-4ee3-ac4c-f7f14ebbce0e": {
+            "paths": [
+                "metadata/store/MimeTypeStore",
+                "app/store/override/MimeTypeStore.js",
+                "app/store/MimeTypeStore.js"
+            ],
+            "className": "MimeTypeStore"
         }
     },
     "viewOrderMap": {
@@ -172,7 +180,8 @@
         ],
         "store": [
             "83025eb7-3662-4fac-a366-0a16af694b9f",
-            "13cb43e7-f9bb-4232-861d-5f015cd2b2e3"
+            "13cb43e7-f9bb-4232-861d-5f015cd2b2e3",
+            "5ad4aadc-87a9-4ee3-ac4c-f7f14ebbce0e"
         ],
         "controller": [
             "58db434c-ecc6-4287-94e9-a50a99afbb07",

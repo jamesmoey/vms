@@ -36,6 +36,20 @@
             "designerId": "3d543a0a-5729-414a-b525-4efc41d5cfbd",
             "cn": [
                 {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "layout|margins": "0 10 0 0",
+                        "fieldLabel": null
+                    },
+                    "designerId": "34e6a7ee-032c-4d35-bafc-9bf66125e115"
+                },
+                {
                     "type": "Ext.button.Button",
                     "reference": {
                         "name": "items",
@@ -47,20 +61,6 @@
                         "text": "Search"
                     },
                     "designerId": "a32eb318-69b9-4764-9693-992875cb9e7b"
-                },
-                {
-                    "type": "Ext.form.field.Text",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": 1,
-                        "layout|margins": "0 0 0 10",
-                        "fieldLabel": null
-                    },
-                    "designerId": "34e6a7ee-032c-4d35-bafc-9bf66125e115"
                 }
             ]
         },
@@ -89,7 +89,7 @@
                 "layout|flex": 2,
                 "itemId": "uploadGrid",
                 "header": false,
-                "title": "My Grid Panel",
+                "title": null,
                 "store": "S3ResourceStore"
             },
             "designerId": "02629f94-ed5f-4c37-8628-d84219b17c34",
@@ -135,9 +135,58 @@
                         "dataIndex": "mime_type",
                         "emptyCellText": "Unknown",
                         "menuText": "",
-                        "text": "Mime Type"
+                        "text": "Mime Type",
+                        "flex": 1
                     },
-                    "designerId": "96167f23-d104-4c43-aadc-eb84ba120d55"
+                    "designerId": "96167f23-d104-4c43-aadc-eb84ba120d55",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "renderer",
+                                "designer|params": [
+                                    "value",
+                                    "metaData",
+                                    "record",
+                                    "rowIndex",
+                                    "colIndex",
+                                    "store",
+                                    "view"
+                                ],
+                                "implHandler": [
+                                    "if (value === null || value === \"\") {",
+                                    "    return \"Unknown\";",
+                                    "} else {",
+                                    "    return value;",
+                                    "}"
+                                ]
+                            },
+                            "designerId": "688d495a-333d-47c2-94ad-a6a8ea8df48c"
+                        },
+                        {
+                            "type": "Ext.form.field.ComboBox",
+                            "reference": {
+                                "name": "editor",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "anyMatch": true,
+                                "displayField": "type",
+                                "forceSelection": true,
+                                "queryMode": "local",
+                                "store": "MimeTypeStore",
+                                "typeAhead": true,
+                                "valueField": "type"
+                            },
+                            "designerId": "17a0c1c7-bfc8-4b5f-b72c-7e1177251155"
+                        }
+                    ]
                 },
                 {
                     "type": "Ext.grid.View",
@@ -160,6 +209,129 @@
                     ]
                 },
                 {
+                    "type": "Ext.grid.plugin.CellEditing",
+                    "reference": {
+                        "name": "plugins",
+                        "type": "array"
+                    },
+                    "codeClass": "Ext.grid.plugin.CellEditing",
+                    "userConfig": {
+                        "clicksToEdit": 1,
+                        "triggerEvent": "cellclick"
+                    },
+                    "designerId": "6cc18f06-eff2-42f6-8833-fe7725df51b5"
+                },
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "left"
+                    },
+                    "designerId": "5fd540b2-5d63-4345-a8e1-f04a0f373183",
+                    "cn": [
+                        {
+                            "type": "Ext.container.ButtonGroup",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "disabled": true,
+                                "title": "",
+                                "titleCollapse": true,
+                                "columns": 1
+                            },
+                            "designerId": "6c7bfed0-03b0-4126-b4fb-19d1f804863a",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "saveBtn",
+                                        "icon": "/images/mimiglyphs/54.png",
+                                        "text": "",
+                                        "tooltip": "Save Changes"
+                                    },
+                                    "configAlternates": {
+                                        "tooltip": "string"
+                                    },
+                                    "designerId": "def0efd8-b1f1-40c2-bc5a-890be7b2ae3e"
+                                },
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "resetBtn",
+                                        "icon": "/images/mimiglyphs/52.png",
+                                        "text": "",
+                                        "tooltip": "Cancel Changes"
+                                    },
+                                    "configAlternates": {
+                                        "tooltip": "string"
+                                    },
+                                    "designerId": "91bc3289-3807-42de-844a-d08821b327c3"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "disabled": true,
+                                "itemId": "deleteBtn",
+                                "icon": "/images/trash-icon.png",
+                                "scale": "large",
+                                "text": "",
+                                "tooltip": "Remove Selected"
+                            },
+                            "configAlternates": {
+                                "tooltip": "string"
+                            },
+                            "designerId": "64662a26-50a4-4d24-9dad-21440d9f24b2"
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "disabled": true,
+                                "itemId": "typeAssignBtn",
+                                "icon": "/images/gear-icon.png",
+                                "scale": "large",
+                                "text": "",
+                                "tooltip": "Mime type based on file extension"
+                            },
+                            "configAlternates": {
+                                "tooltip": "string"
+                            },
+                            "designerId": "bffa4307-ab11-45cf-8e6f-dabb9510e30f"
+                        }
+                    ]
+                },
+                {
                     "type": "Ext.selection.RowModel",
                     "reference": {
                         "name": "selModel",
@@ -169,7 +341,7 @@
                     "userConfig": {
                         "mode": "MULTI"
                     },
-                    "designerId": "d2a8ef78-076f-4fc3-9a8f-d497b48a1658"
+                    "designerId": "41a1140e-b09d-4f4e-a554-40988ef3d267"
                 }
             ]
         }

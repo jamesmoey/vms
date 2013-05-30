@@ -19,20 +19,98 @@ Ext.define('VMS.controller.UploadController', {
     stores: [
         'S3ResourceStore'
     ],
-    views: [
-        'UploadPanel'
+
+    refs: [
+        {
+            ref: 'gridToolbar',
+            selector: '#uploadPanel #uploadGrid toolbar',
+            xtype: 'Ext.toolbar.Toolbar'
+        },
+        {
+            ref: 'grid',
+            selector: '#uploadPanel #uploadGrid'
+        }
     ],
 
     onToolClick: function(tool, e, eOpts) {
         this.getStore('S3ResourceStore').reload();
     },
 
+    onButtonClick: function(button, e, eOpts) {
+        if (button.getItemId() == "saveBtn") {
+            this.getStore('S3ResourceStore').sync();
+        } else if (button.getItemId() == "resetBtn") {
+            this.getStore('S3ResourceStore').rejectChanges();
+        } else if (button.getItemId() == "deleteBtn") {
+            this.getStore('S3ResourceStore').remove(
+            this.getGrid().getSelectionModel().selected.getRange()
+            );
+        } else if (button.getItemId() == "typeAssignBtn") {
+            var mimeTypeStore = this.getStore('MimeTypeStore');
+            this.getGrid().getSelectionModel().selected.each(function(item) {
+                var fileName = item.get('key');
+                if (!item.get('mime_type')) {
+                    var mimeType = mimeTypeStore.findRecord('extension', fileName.substring(fileName.lastIndexOf(".")));
+                    if (mimeType) {
+                        item.set('mime_type', mimeType.get('type'));
+                    }
+                }
+            });
+        }
+    },
+
+    onGridpanelSelectionChange: function(model, selected, eOpts) {
+        if (selected.length > 0) {
+            this.getGridToolbar().child('#deleteBtn').enable();
+            Ext.each(selected, function(item) {
+                if (!item.get('mime_type')) {
+                    this.getGridToolbar().child('#typeAssignBtn').enable();
+                    return false;
+                } else {
+                    this.getGridToolbar().child('#typeAssignBtn').disable();
+                }
+                return true;
+            }, this);
+        } else {
+            this.getGridToolbar().child('#deleteBtn').disable();
+            this.getGridToolbar().child('#typeAssignBtn').disable();
+        }
+    },
+
     init: function(application) {
+        this.getStore('S3ResourceStore').addListener('datachanged', this.onS3ResourceStoreChange, this, {
+            delay: 100
+        });
+        this.getStore('S3ResourceStore').addListener('update', this.onS3ResourceStoreChange, this, {
+            delay: 100
+        });
+
         this.control({
-            "#uploadPanel #refresh": {
+            "#uploadPanel tool#refresh": {
                 click: this.onToolClick
+            },
+            "#uploadGrid toolbar button": {
+                click: this.onButtonClick
+            },
+            "#uploadGrid": {
+                selectionchange: this.onGridpanelSelectionChange
             }
         });
+    },
+
+    onS3ResourceStoreChange: function(store, opts) {
+        console.log('onS3ResourceStoreChange');
+        if (this.getGridToolbar()) {
+            console.log(store.getModifiedRecords());
+            console.log(store.getNewRecords());
+            console.log(store.getRemovedRecords());
+
+            if (store.getModifiedRecords().length > 0 || store.getNewRecords().length > 0 || store.getRemovedRecords().length > 0) {
+                this.getGridToolbar().child('buttongroup').enable();
+            } else {
+                this.getGridToolbar().child('buttongroup').disable();
+            }
+        }
     }
 
 });
