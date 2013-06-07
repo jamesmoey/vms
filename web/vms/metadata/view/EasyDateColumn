@@ -1,0 +1,100 @@
+{
+    "type": "Ext.grid.column.Column",
+    "reference": {
+        "name": "columns",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "EasyDateColumn",
+        "designer|userAlias": "easydatecolumn",
+        "text": null
+    },
+    "designerId": "7185f3fe-4147-4813-9340-2f0af8dbbdce",
+    "cn": [
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "renderer",
+                "designer|params": [
+                    "value",
+                    "metaData",
+                    "record",
+                    "rowIndex",
+                    "colIndex",
+                    "store",
+                    "view"
+                ],
+                "implHandler": [
+                    "var column = metaData.column;",
+                    "var now = new Date();",
+                    "var today = new Date(now.getFullYear(), now.getMonth(), now.getDay());",
+                    "var startOfThisWeek = new Date(today.getTime() - (60*60*24*6));",
+                    "var startOfThisYear = new Date(now.getFullYear(), 0, 1);",
+                    "var endOfThisYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);",
+                    "var endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);",
+                    "var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate()-1);",
+                    "var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 23, 59, 59);",
+                    "if (Ext.Date.between(value, yesterday, tomorrow)) {",
+                    "    var day;",
+                    "    if (Ext.Date.between(value, today, endOfToday)) day = '';",
+                    "    else if (value > endOfToday) day = 'Tomorrow, ';",
+                    "    else day = 'Yesterday, ';",
+                    "    return day + Ext.Date.format(value, column.recentFormat);",
+                    "} else if (value < now) {",
+                    "    if (value >= startOfThisWeek) {",
+                    "        return Ext.Date.format(value, column.weekFormat);",
+                    "    } else if (value >= startOfThisYear) {",
+                    "        return Ext.Date.format(value, column.monthFormat);",
+                    "    }",
+                    "} else if (value > now) {",
+                    "    if (value < today.getTime() + (60*60*24*6)) {",
+                    "        return 'Coming ' + Ext.Date.format(value, column.weekFormat);",
+                    "    } else if (value < endOfThisYear) {",
+                    "        return Ext.Date.format(value, column.monthFormat);",
+                    "    }",
+                    "}",
+                    "return Ext.Date.format(value, column.yearFormat);"
+                ]
+            },
+            "designerId": "e8344da3-049b-44c2-a00a-5ed126bbf0ce"
+        },
+        {
+            "type": "processcfgfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "processEasyDateColumn",
+                "designer|params": [
+                    "config"
+                ],
+                "implHandler": [
+                    "if (!config.recentFormat) {",
+                    "    this.recentFormat = 'H:i:s';",
+                    "}",
+                    "",
+                    "if (!config.weekFormat) {",
+                    "    this.weekFormat = 'l, H:i';",
+                    "}",
+                    "",
+                    "if (!config.monthFormat) {",
+                    "    this.monthFormat = 'F j, H:i';",
+                    "}",
+                    "",
+                    "if (!config.yearFormat) {",
+                    "    this.yearFormat = 'F j, y';",
+                    "}"
+                ]
+            },
+            "designerId": "cfad0edf-1b71-46eb-b0be-a3e6be08a58e"
+        }
+    ]
+}

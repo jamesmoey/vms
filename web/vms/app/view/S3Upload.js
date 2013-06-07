@@ -18,7 +18,7 @@ Ext.define('VMS.view.S3Upload', {
     alias: 'widget.s3upload',
 
     componentCls: 'tpg-s3upload',
-    html: '<div class="status">Drag &amp; Drop File Here</div>',
+    html: '<input class="file" type="file" multiple><div class="status">Drag &amp; Drop File Here</div></input>',
 
     initComponent: function() {
         var me = this;
@@ -49,6 +49,7 @@ Ext.define('VMS.view.S3Upload', {
 
         var self = this;
         var htmlElement = this.getEl().dom;
+        var fileElement = this.getEl().down('.file').dom;
 
         if (this.progressBar) {
             var el = this.getEl().appendChild({
@@ -72,26 +73,18 @@ Ext.define('VMS.view.S3Upload', {
             }
         }, false);
 
-        htmlElement.addEventListener('drop', function(evt) {
-            if (evt.stopPropagation) {
-                evt.stopPropagation(); // stops the browser from redirecting.
-            }
-            if (evt.preventDefault) {
-                evt.preventDefault();
-            }
+        function upload(files) {
             if (!self.uploadProcess || !self.uploadProcess.isPending()) {
                 self.uploadProcess = null;
                 var valid = self.fireEvent('validateUpload', {
-                    files: evt.dataTransfer.files,
-                    event: evt,
+                    files: files,
                     record: self.record || null
                 });
 
                 if (valid) {
-                    var fileList = evt.dataTransfer.files;
                     require(['lib/upload'], function(upload) {
-                        for(var i = 0; i < fileList.length; i++) {
-                            var file = fileList.item(i);
+                        for(var i = 0; i < files.length; i++) {
+                            var file = files.item(i);
                             if (self.uploadProcess) {
                                 self.uploadProcess.then(function() {
                                     return self.upload(upload, file)
@@ -107,6 +100,21 @@ Ext.define('VMS.view.S3Upload', {
             } else {
                 Ext.Msg.alert('Unable to Upload', 'Error: ' + 'Upload is already in progress');
             }
+        }
+
+        fileElement.addEventListener('change', function(evt) {
+            upload(this.files);
+        }, false);
+
+
+        htmlElement.addEventListener('drop', function(evt) {
+            if (evt.stopPropagation) {
+                evt.stopPropagation(); // stops the browser from redirecting.
+            }
+            if (evt.preventDefault) {
+                evt.preventDefault();
+            }
+            upload(evt.dataTransfer.files);
             return false;
         }, false);
     },
@@ -123,6 +131,7 @@ Ext.define('VMS.view.S3Upload', {
         });
 
         if (this.progressBar) {
+            this.progressBar.updateProgress(0, "0%");
             this.progressBar.show();
         }
         if (this.record) {
@@ -150,7 +159,7 @@ Ext.define('VMS.view.S3Upload', {
         }, function (count) {
             if (Ext.isNumber(count)) {
                 if (self.progressBar) {
-                    self.progressBar.updateProgress(count/100);
+                    self.progressBar.updateProgress(count/100, Ext.Number.toFixed(count,2)+"%");
                 }
                 self.fireEvent('uploadProcess', {
                     progress: count
@@ -160,6 +169,13 @@ Ext.define('VMS.view.S3Upload', {
                 self.record.set('completed_part', count.completed_part);
             }
         });
+    },
+
+    afterComponentLayout: function(width, height) {
+        var fileElement = this.getEl().down('.file');
+
+        fileElement.setHeight(height);
+        fileElement.setWidth(width);
     }
 
 });

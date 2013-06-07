@@ -16,6 +16,10 @@
 Ext.define('VMS.view.PartUploadPanel', {
     extend: 'Ext.panel.Panel',
 
+    requires: [
+        'VMS.view.EasyDateColumn'
+    ],
+
     itemId: 'partUploadPanel',
     layout: {
         align: 'stretch',
@@ -113,16 +117,14 @@ Ext.define('VMS.view.PartUploadPanel', {
                             text: 'Status'
                         },
                         {
-                            xtype: 'datecolumn',
+                            xtype: 'easydatecolumn',
                             dataIndex: 'created_at',
-                            text: 'Started On',
-                            format: 'd/m H:i:s'
+                            text: 'Started On'
                         },
                         {
-                            xtype: 'datecolumn',
+                            xtype: 'easydatecolumn',
                             dataIndex: 'updated_at',
-                            text: 'Last Update',
-                            format: 'd/m H:i:s'
+                            text: 'Last Update'
                         },
                         {
                             xtype: 'templatecolumn',

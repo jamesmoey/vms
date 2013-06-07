@@ -32,7 +32,8 @@ class S3ResourcesListener implements EventSubscriber {
     {
         return array(
             'postRemove',
-            'preUpdate'
+            'preUpdate',
+            'postUpdate'
         );
     }
 
@@ -73,6 +74,43 @@ class S3ResourcesListener implements EventSubscriber {
                         'Key' => $arg->getOldValue('key').'?versionId='.$id
                     ]);
                 }
+            }
+        }
+    }
+
+    public function postUpdate(LifecycleEventArgs $args) {
+        /** @var S3Resources $entity */
+        $entity = $args->getEntity();
+        if ($entity instanceof S3Resources) {
+            /** @var EntityManager $entityManager */
+            $entityManager = $args->getEntityManager();
+            if (stripos($entity->getMimeType(), 'video/') === 0) {
+                $type = 'Tpg\ResourceBundle\Entity\VideoS3Resources';
+            } else if (stripos($entity->getMimeType(), 'image/') === 0) {
+                $type = 'Tpg\ResourceBundle\Entity\ImageS3Resources';
+            } else if (stripos($entity->getMimeType(), 'audio/') === 0) {
+                $type = 'Tpg\ResourceBundle\Entity\AudioS3Resources';
+            } else {
+                $type = 'Tpg\ResourceBundle\Entity\OtherS3Resources';
+            }
+            if (!$entity instanceof $type) {
+                /** @var S3Resources $newResource */
+                $newResource = new $type();
+                $newResource->setBucket($entity->getBucket())
+                    ->setKey($entity->getKey())
+                    ->setMimeType($entity->getMimeType())
+                    ->setVersionId($entity->getVersionId())
+                    ->setCreatedAt($entity->getCreatedAt())
+                    ->setUpdatedAt($entity->getUpdatedAt())
+                ;
+                $entityManager->persist($newResource);
+                $entityManager->createQueryBuilder()
+                    ->delete(get_class($entity), 'e')
+                    ->where('e.id = :id')
+                    ->getQuery()
+                    ->execute([':id'=>$entity->getId()])
+                ;
+                $entityManager->flush();
             }
         }
     }

@@ -21,14 +21,17 @@ Ext.Loader.setConfig({
 Ext.application({
     models: [
         'MultipartUpload',
-        'S3Resources'
+        'S3Resources',
+        'Tag'
     ],
     stores: [
-        'MimeTypeStore'
+        'MimeTypeStore',
+        'TagStore'
     ],
     views: [
         'MyViewport',
-        'S3Upload'
+        'S3Upload',
+        'EasyDateColumn'
     ],
     autoCreateViewport: true,
     controllers: [

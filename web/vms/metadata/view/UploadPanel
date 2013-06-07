@@ -14,7 +14,7 @@
         "designer|userClassName": "UploadPanel",
         "layout": "vbox",
         "closable": true,
-        "title": "Uploads"
+        "title": "Completed Upload"
     },
     "designerId": "343a8e7d-ae57-4781-8c67-512d4de254b1",
     "cn": [
@@ -110,7 +110,7 @@
                     "designerId": "055f6ba6-e319-456b-9ad3-3e660dbd848c"
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "linkedinstance",
                     "reference": {
                         "name": "columns",
                         "type": "array"
@@ -119,10 +119,10 @@
                     "userConfig": {
                         "dataIndex": "created_at",
                         "text": "Created On",
-                        "flex": 1,
-                        "format": "d-m-Y H:i:s"
+                        "flex": 1
                     },
-                    "designerId": "bf7a1c58-1b74-403d-bd93-832279ebd13f"
+                    "designerId": "ecea5ebd-feea-4ad0-bbf7-9600de6edd10",
+                    "masterInstanceId": "7185f3fe-4147-4813-9340-2f0af8dbbdce"
                 },
                 {
                     "type": "Ext.grid.column.Column",
@@ -204,6 +204,10 @@
                                 "type": "array"
                             },
                             "codeClass": "Ext.grid.plugin.DragDrop",
+                            "userConfig": {
+                                "dragGroup": "resource",
+                                "enableDrop": false
+                            },
                             "designerId": "b9e5ebbc-6257-4172-96de-35c3232d9dd2"
                         }
                     ]

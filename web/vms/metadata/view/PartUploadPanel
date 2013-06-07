@@ -231,36 +231,32 @@
                     ]
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "linkedinstance",
                     "reference": {
                         "name": "columns",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|displayName": null,
                         "dataIndex": "created_at",
-                        "text": "Started On",
-                        "flex": null,
-                        "format": "d/m H:i:s"
+                        "text": "Started On"
                     },
-                    "designerId": "57a794be-5c52-4063-8d11-352e81f7628f"
+                    "designerId": "bfd23205-a711-41aa-84dc-d51351eb0ff1",
+                    "masterInstanceId": "7185f3fe-4147-4813-9340-2f0af8dbbdce"
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "linkedinstance",
                     "reference": {
                         "name": "columns",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|displayName": null,
                         "dataIndex": "updated_at",
-                        "text": "Last Update",
-                        "flex": null,
-                        "format": "d/m H:i:s"
+                        "text": "Last Update"
                     },
-                    "designerId": "f0cf457d-14e3-4e26-a4d8-c643645fc713"
+                    "designerId": "7f53b01f-4234-4e93-9cab-4c81b39b079b",
+                    "masterInstanceId": "7185f3fe-4147-4813-9340-2f0af8dbbdce"
                 },
                 {
                     "type": "Ext.grid.column.Template",

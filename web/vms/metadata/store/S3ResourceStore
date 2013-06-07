@@ -34,6 +34,19 @@
                     },
                     "codeClass": null,
                     "designerId": "dd4ae3eb-a78a-4007-927e-1898de31a754"
+                },
+                {
+                    "type": "Ext.data.writer.Json",
+                    "reference": {
+                        "name": "writer",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "writeAllFields": false,
+                        "writeRecordId": false
+                    },
+                    "designerId": "e8ebdaea-4217-417b-9ed3-50a835129cce"
                 }
             ]
         },

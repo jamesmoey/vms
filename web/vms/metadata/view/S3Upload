@@ -9,7 +9,7 @@
         "cls": null,
         "componentCls": "tpg-s3upload",
         "height": null,
-        "html": "<div class=\"status\">Drag &amp; Drop File Here</div>",
+        "html": "<input class=\"file\" type=\"file\" multiple><div class=\"status\">Drag &amp; Drop File Here</div></input>",
         "style": null,
         "width": null,
         "designer|userClassName": "S3Upload",
@@ -51,6 +51,7 @@
                     "",
                     "var self = this;",
                     "var htmlElement = this.getEl().dom;",
+                    "var fileElement = this.getEl().down('.file').dom;",
                     "",
                     "if (this.progressBar) {",
                     "    var el = this.getEl().appendChild({",
@@ -74,26 +75,18 @@
                     "    }",
                     "}, false);",
                     "",
-                    "htmlElement.addEventListener('drop', function(evt) {",
-                    "    if (evt.stopPropagation) {",
-                    "        evt.stopPropagation(); // stops the browser from redirecting.",
-                    "    }",
-                    "    if (evt.preventDefault) {",
-                    "        evt.preventDefault();",
-                    "    }",
+                    "function upload(files) {",
                     "    if (!self.uploadProcess || !self.uploadProcess.isPending()) {",
                     "        self.uploadProcess = null;",
                     "        var valid = self.fireEvent('validateUpload', {",
-                    "            files: evt.dataTransfer.files,",
-                    "            event: evt,",
+                    "            files: files,",
                     "            record: self.record || null",
                     "        });",
                     "",
                     "        if (valid) {",
-                    "            var fileList = evt.dataTransfer.files;",
                     "            require(['lib/upload'], function(upload) {",
-                    "                for(var i = 0; i < fileList.length; i++) {",
-                    "                    var file = fileList.item(i);",
+                    "                for(var i = 0; i < files.length; i++) {",
+                    "                    var file = files.item(i);",
                     "                    if (self.uploadProcess) {",
                     "                        self.uploadProcess.then(function() {",
                     "                            return self.upload(upload, file)",
@@ -109,6 +102,21 @@
                     "    } else {",
                     "        Ext.Msg.alert('Unable to Upload', 'Error: ' + 'Upload is already in progress');",
                     "    }",
+                    "}",
+                    "",
+                    "fileElement.addEventListener('change', function(evt) {",
+                    "    upload(this.files);",
+                    "}, false);",
+                    "",
+                    "",
+                    "htmlElement.addEventListener('drop', function(evt) {",
+                    "    if (evt.stopPropagation) {",
+                    "        evt.stopPropagation(); // stops the browser from redirecting.",
+                    "    }",
+                    "    if (evt.preventDefault) {",
+                    "        evt.preventDefault();",
+                    "    }",
+                    "    upload(evt.dataTransfer.files);",
                     "    return false;",
                     "}, false);"
                 ]
@@ -223,6 +231,7 @@
                     "});",
                     "",
                     "if (this.progressBar) {",
+                    "    this.progressBar.updateProgress(0, \"0%\");",
                     "    this.progressBar.show();",
                     "}",
                     "if (this.record) {",
@@ -250,7 +259,7 @@
                     "}, function (count) {",
                     "    if (Ext.isNumber(count)) {",
                     "        if (self.progressBar) {",
-                    "            self.progressBar.updateProgress(count/100);",
+                    "            self.progressBar.updateProgress(count/100, Ext.Number.toFixed(count,2)+\"%\");",
                     "        }",
                     "        self.fireEvent('uploadProcess', {",
                     "            progress: count",
@@ -263,6 +272,28 @@
                 ]
             },
             "designerId": "b804124d-a3e1-4bc6-a8e4-d4f04da61bbf"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "afterComponentLayout",
+                "designer|params": [
+                    "width",
+                    "height"
+                ],
+                "implHandler": [
+                    "var fileElement = this.getEl().down('.file');",
+                    "",
+                    "fileElement.setHeight(height);",
+                    "fileElement.setWidth(width);"
+                ]
+            },
+            "designerId": "210a29c1-5ae7-4a5d-ac78-a4cd00be880a"
         }
     ]
 }

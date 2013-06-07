@@ -33,6 +33,11 @@ Ext.define('VMS.store.S3ResourceStore', {
                 format: 'json',
                 reader: {
                     type: 'json'
+                },
+                writer: {
+                    type: 'json',
+                    writeAllFields: false,
+                    writeRecordId: false
                 }
             },
             sorters: {

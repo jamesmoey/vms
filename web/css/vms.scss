@@ -18,11 +18,19 @@
     min-height: 100px;
     color: #999;
     text-align: center;
+    position: relative;
 
     &.over {
         border: 3px dashed #ffdc0c;
         color: #b68700;
         font-weight: bold;
+    }
+
+    .file {
+        opacity: 0;
+        position: absolute;
+        top: -3px;
+        right: -3px;
     }
 }
 

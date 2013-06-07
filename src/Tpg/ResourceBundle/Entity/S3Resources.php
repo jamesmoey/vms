@@ -86,7 +86,6 @@ abstract class S3Resources {
      * @ORM\Column("mime_type")
      *
      * @var string
-     * @JMS\ReadOnly
      */
     protected $mimeType;
 
@@ -228,6 +227,30 @@ abstract class S3Resources {
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     *
+     * @return S3Resources
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     *
+     * @return S3Resources
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     /**

@@ -40,6 +40,10 @@ Ext.define('VMS.model.S3Resources', {
         {
             name: 'mime_type',
             type: 'string'
+        },
+        {
+            name: 'type',
+            type: 'string'
         }
     ]
 });

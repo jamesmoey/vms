@@ -31,8 +31,10 @@ Ext.define('VMS.controller.PartUploadViewController', {
     init: function() {
         this.record = this.config.record;
         this.getUpload().record = this.record;
+        var progress = Object.keys(this.record.get('completed_part')).length / this.record.get('number_of_part');
         this.getProgress().updateProgress(
-        Object.keys(this.record.get('completed_part')).length / this.record.get('number_of_part')
+        progress,
+        Ext.Number.toFixed(progress * 100,2)+"%"
         );
         this.getContent().update(this.record.getData());
         return this.callParent(arguments);
@@ -56,7 +58,7 @@ Ext.define('VMS.controller.PartUploadViewController', {
     },
 
     onComponentUploadProcess: function(eventOptions) {
-        this.getProgress().updateProgress(eventOptions.progress/100);
+        this.getProgress().updateProgress(eventOptions.progress/100, Ext.Number.toFixed(eventOptions.progress,2)+"%");
     },
 
     onComponentUploadStarted: function(eventOptions) {

@@ -16,6 +16,10 @@
 Ext.define('VMS.view.UploadPanel', {
     extend: 'Ext.panel.Panel',
 
+    requires: [
+        'VMS.view.EasyDateColumn'
+    ],
+
     itemId: 'uploadPanel',
     layout: {
         align: 'stretch',
@@ -23,7 +27,7 @@ Ext.define('VMS.view.UploadPanel', {
         type: 'vbox'
     },
     closable: true,
-    title: 'Uploads',
+    title: 'Completed Upload',
 
     initComponent: function() {
         var me = this;
@@ -63,11 +67,10 @@ Ext.define('VMS.view.UploadPanel', {
                             flex: 2
                         },
                         {
-                            xtype: 'datecolumn',
+                            xtype: 'easydatecolumn',
                             dataIndex: 'created_at',
                             text: 'Created On',
-                            flex: 1,
-                            format: 'd-m-Y H:i:s'
+                            flex: 1
                         },
                         {
                             xtype: 'gridcolumn',
@@ -98,7 +101,8 @@ Ext.define('VMS.view.UploadPanel', {
                     viewConfig: {
                         plugins: [
                             Ext.create('Ext.grid.plugin.DragDrop', {
-
+                                dragGroup: 'resource',
+                                enableDrop: false
                             })
                         ]
                     },
