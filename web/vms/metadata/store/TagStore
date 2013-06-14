@@ -1,0 +1,55 @@
+{
+    "type": "Ext.data.TreeStore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": true,
+        "autoSync": true,
+        "model": "Tag",
+        "storeId": "MyTreeStore",
+        "designer|userClassName": "TagStore",
+        "root": null
+    },
+    "designerId": "53998fce-9707-4712-8c38-9160ee5d767d",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Rest",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "/api/tags",
+                "format": "json"
+            },
+            "designerId": "1629a46d-883e-4932-8877-bd141984ca62",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "0814100c-c315-421f-9272-0b8b18c7e346"
+                },
+                {
+                    "type": "Ext.data.writer.Json",
+                    "reference": {
+                        "name": "writer",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "writeRecordId": false
+                    },
+                    "designerId": "7c43790f-3590-4e7f-83fc-21efa34741e8"
+                }
+            ]
+        }
+    ]
+}

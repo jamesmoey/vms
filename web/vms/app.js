@@ -25,8 +25,7 @@ Ext.application({
         'Tag'
     ],
     stores: [
-        'MimeTypeStore',
-        'TagStore'
+        'MimeTypeStore'
     ],
     views: [
         'MyViewport',

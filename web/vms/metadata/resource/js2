@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js2",
+        "url": "lib/EasyDateColumn.js"
+    },
+    "designerId": "cf42c483-c06c-4efe-b198-2c04fd2f3785"
+}

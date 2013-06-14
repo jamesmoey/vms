@@ -3,3 +3,8 @@ tpg_resources_s3resource_api:
     name_prefix:    tpg_s3resource_api_
     prefix:         /s3
     resource:       Tpg\ResourceBundle\Controller\S3ResourcesController
+
+tpg_resources_tag_api:
+    type:           rest
+    name_prefix:    tpg_tag_api_
+    resource:       Tpg\ResourceBundle\Controller\TagController

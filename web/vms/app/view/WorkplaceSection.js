@@ -21,15 +21,14 @@ Ext.define('VMS.view.WorkplaceSection', {
         'VMS.view.S3Upload'
     ],
 
-    id: 'workplaceSection',
-    itemId: 'section',
+    itemId: 'workplaceSection',
     width: 300,
     layout: {
-        fill: false,
         titleCollapse: false,
         hideCollapseTool: true,
         animate: true,
         sequence: false,
+        multi: true,
         type: 'accordion'
     },
     collapsed: false,
@@ -52,13 +51,12 @@ Ext.define('VMS.view.WorkplaceSection', {
                     },
                     layout: {
                         align: 'stretch',
-                        padding: '',
                         type: 'vbox'
                     },
                     bodyBorder: false,
                     bodyPadding: '',
+                    collapsible: true,
                     frameHeader: false,
-                    manageHeight: false,
                     title: 'Uploads',
                     items: [
                         {
@@ -99,19 +97,60 @@ Ext.define('VMS.view.WorkplaceSection', {
                 },
                 {
                     xtype: 'panel',
+                    itemId: 'resourceSection',
+                    layout: {
+                        align: 'stretch',
+                        type: 'vbox'
+                    },
+                    collapsible: true,
                     title: 'Resources',
                     items: [
                         {
+                            xtype: 'textfield',
+                            itemId: 'newTag',
+                            padding: 5,
+                            hideLabel: true,
+                            enableKeyEvents: true
+                        },
+                        {
                             xtype: 'treepanel',
+                            flex: 1,
+                            itemId: 'treePanel',
                             frameHeader: false,
                             header: false,
+                            manageHeight: false,
                             title: 'My Tree Panel',
                             titleCollapse: false,
                             hideHeaders: true,
+                            scroll: true,
+                            store: 'TagStore',
+                            displayField: 'name',
                             rootVisible: false,
+                            useArrows: true,
                             viewConfig: {
-
-                            }
+                                rootVisible: false,
+                                plugins: [
+                                    Ext.create('Ext.tree.plugin.TreeViewDragDrop', {
+                                        appendOnly: true,
+                                        dragGroup: 'tag',
+                                        dropGroup: 'tag'
+                                    })
+                                ]
+                            },
+                            selModel: Ext.create('Ext.selection.RowModel', {
+                                mode: 'MULTI'
+                            }),
+                            columns: [
+                                {
+                                    xtype: 'treecolumn',
+                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        return value + " (" + record.get('count') + ")";
+                                    },
+                                    dataIndex: 'name',
+                                    text: 'Name',
+                                    flex: 1
+                                }
+                            ]
                         }
                     ]
                 }

@@ -8,7 +8,8 @@
     "userConfig": {
         "stores": [
             "MultipartUploadStore",
-            "S3ResourceStore"
+            "S3ResourceStore",
+            "TagStore"
         ],
         "views": [
             "WorkplaceSection",
@@ -75,6 +76,121 @@
                 "designer|controlQuery": "#uploadSection s3upload"
             },
             "designerId": "e8e563c0-aace-47f3-88eb-ea00f73cfbf6"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onTextfieldKeypress",
+                "implHandler": [
+                    "if (e.getKey() == Ext.EventObject.ENTER) {",
+                    "    if (textfield.getValue().length > 0) {",
+                    "        var value = textfield.getValue();",
+                    "        textfield.setValue('');",
+                    "        var found = false;",
+                    "        var view = this.getResourceTreeSection().getView();",
+                    "        var store = this.getStore('TagStore');",
+                    "        store.getRootNode().cascadeBy(function() {",
+                    "            if (this.get('name') == value) {",
+                    "                found = true;",
+                    "                view.focusNode(this);",
+                    "                return false;",
+                    "            }",
+                    "        });",
+                    "        if (!found) {",
+                    "            var node = new VMS.model.Tag({",
+                    "                name: value",
+                    "            });",
+                    "            store.suspendAutoSync();",
+                    "            this.getResourceSection().setLoading(true);",
+                    "            store.getRootNode().appendChild(node);",
+                    "            store.sync({",
+                    "                success: function() {",
+                    "                    this.getResourceSection().setLoading(false);",
+                    "                    store.resumeAutoSync();",
+                    "                },",
+                    "                failure: function() {",
+                    "                    store.getRootNode().removeChild(node, true);",
+                    "                    Ext.MessageBox.alert('Error', 'Unable to add tag');",
+                    "                    this.getResourceSection().setLoading(false);",
+                    "                    store.resumeAutoSync();",
+                    "                },",
+                    "                scope: this",
+                    "            });",
+                    "        } else {",
+                    "            Ext.MessageBox.alert('Warning', 'Tag with the same name already exist');",
+                    "        }",
+                    "    }",
+                    "}"
+                ],
+                "name": "keypress",
+                "scope": "me",
+                "designer|targetType": "Ext.form.field.Text",
+                "designer|controlQuery": "#workplaceSection #newTag"
+            },
+            "designerId": "8b439b02-0f74-4731-a54c-589b73cca70f"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "resourceTreeSection",
+                "selector": "#workplaceSection #resourceSection #treePanel",
+                "xtype": "Ext.tree.Panel"
+            },
+            "designerId": "7e2ef542-2f9f-4245-9ae2-389a59485cc0"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "resourceSection",
+                "selector": "#workplaceSection #resourceSection"
+            },
+            "designerId": "e0abd022-93d8-4826-a64d-d3e208144729"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onTreepanelCellkeydown",
+                "implHandler": [
+                    "switch (e.getKey()) {",
+                    "    case Ext.EventObject.DELETE:",
+                    "        Ext.MessageBox.confirm('Tag Deletion', 'Are you sure?', function() {",
+                    "        });",
+                    "        break;",
+                    "    case Ext.EventObject.NUM_PLUS:",
+                    "    case Ext.EventObject.ENTER:",
+                    "        tableview.expand(record, true);",
+                    "        break;",
+                    "    case Ext.EventObject.NUM_MINUS:",
+                    "        tableview.collapse(record, true);",
+                    "        break;",
+                    "}"
+                ],
+                "name": "cellkeydown",
+                "scope": "me",
+                "designer|targetType": "Ext.tree.Panel",
+                "designer|controlQuery": "#resourceSection #treePanel"
+            },
+            "designerId": "6db9c638-e307-4c99-84e6-8f7e82b8b2f5"
         }
     ]
 }

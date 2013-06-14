@@ -18,7 +18,8 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
 
     stores: [
         'MultipartUploadStore',
-        'S3ResourceStore'
+        'S3ResourceStore',
+        'TagStore'
     ],
     views: [
         'WorkplaceSection',
@@ -30,6 +31,15 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
         {
             ref: 'mainBody',
             selector: '#mainBody'
+        },
+        {
+            ref: 'resourceTreeSection',
+            selector: '#workplaceSection #resourceSection #treePanel',
+            xtype: 'Ext.tree.Panel'
+        },
+        {
+            ref: 'resourceSection',
+            selector: '#workplaceSection #resourceSection'
         }
     ],
 
@@ -47,6 +57,64 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
         this.getStore('S3ResourceStore').reload();
     },
 
+    onTextfieldKeypress: function(textfield, e, eOpts) {
+        if (e.getKey() == Ext.EventObject.ENTER) {
+            if (textfield.getValue().length > 0) {
+                var value = textfield.getValue();
+                textfield.setValue('');
+                var found = false;
+                var view = this.getResourceTreeSection().getView();
+                var store = this.getStore('TagStore');
+                store.getRootNode().cascadeBy(function() {
+                    if (this.get('name') == value) {
+                        found = true;
+                        view.focusNode(this);
+                        return false;
+                    }
+                });
+                if (!found) {
+                    var node = new VMS.model.Tag({
+                        name: value
+                    });
+                    store.suspendAutoSync();
+                    this.getResourceSection().setLoading(true);
+                    store.getRootNode().appendChild(node);
+                    store.sync({
+                        success: function() {
+                            this.getResourceSection().setLoading(false);
+                            store.resumeAutoSync();
+                        },
+                        failure: function() {
+                            store.getRootNode().removeChild(node, true);
+                            Ext.MessageBox.alert('Error', 'Unable to add tag');
+                            this.getResourceSection().setLoading(false);
+                            store.resumeAutoSync();
+                        },
+                        scope: this
+                    });
+                } else {
+                    Ext.MessageBox.alert('Warning', 'Tag with the same name already exist');
+                }
+            }
+        }
+    },
+
+    onTreepanelCellkeydown: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        switch (e.getKey()) {
+            case Ext.EventObject.DELETE:
+            Ext.MessageBox.confirm('Tag Deletion', 'Are you sure?', function() {
+            });
+            break;
+            case Ext.EventObject.NUM_PLUS:
+            case Ext.EventObject.ENTER:
+            tableview.expand(record, true);
+            break;
+            case Ext.EventObject.NUM_MINUS:
+            tableview.collapse(record, true);
+            break;
+        }
+    },
+
     init: function(application) {
         this.control({
             "#workplaceSection #uploadSection menuitem": {
@@ -54,6 +122,12 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
             },
             "#uploadSection s3upload": {
                 uploadFinish: this.onComponentUploadFinish
+            },
+            "#workplaceSection #newTag": {
+                keypress: this.onTextfieldKeypress
+            },
+            "#resourceSection #treePanel": {
+                cellkeydown: this.onTreepanelCellkeydown
             }
         });
     }
