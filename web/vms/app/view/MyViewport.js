@@ -46,7 +46,6 @@ Ext.define('VMS.view.MyViewport', {
                 },
                 {
                     xtype: 'workplace_section',
-                    itemId: 'workplaceSection',
                     title: 'Workplace Section',
                     floatable: false,
                     region: 'west',

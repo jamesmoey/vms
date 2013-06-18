@@ -17,7 +17,7 @@ Ext.define('VMS.view.UploadPanel', {
     extend: 'Ext.panel.Panel',
 
     requires: [
-        'VMS.view.EasyDateColumn'
+        'VMS.view.CompleteUploadGrid'
     ],
 
     itemId: 'uploadPanel',
@@ -54,116 +54,8 @@ Ext.define('VMS.view.UploadPanel', {
                     ]
                 },
                 {
-                    xtype: 'gridpanel',
-                    flex: 2,
-                    itemId: 'uploadGrid',
-                    header: false,
-                    store: 'S3ResourceStore',
-                    columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'key',
-                            text: 'Resource',
-                            flex: 2
-                        },
-                        {
-                            xtype: 'easydatecolumn',
-                            dataIndex: 'created_at',
-                            text: 'Created On',
-                            flex: 1
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                if (value === null || value === "") {
-                                    return "Unknown";
-                                } else {
-                                    return value;
-                                }
-                            },
-                            dataIndex: 'mime_type',
-                            emptyCellText: 'Unknown',
-                            menuText: '',
-                            text: 'Mime Type',
-                            flex: 1,
-                            editor: {
-                                xtype: 'combobox',
-                                anyMatch: true,
-                                displayField: 'type',
-                                forceSelection: true,
-                                queryMode: 'local',
-                                store: 'MimeTypeStore',
-                                typeAhead: true,
-                                valueField: 'type'
-                            }
-                        }
-                    ],
-                    viewConfig: {
-                        plugins: [
-                            Ext.create('Ext.grid.plugin.DragDrop', {
-                                dragGroup: 'resource',
-                                enableDrop: false
-                            })
-                        ]
-                    },
-                    plugins: [
-                        Ext.create('Ext.grid.plugin.CellEditing', {
-                            clicksToEdit: 1,
-                            triggerEvent: 'cellclick'
-                        })
-                    ],
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'left',
-                            items: [
-                                {
-                                    xtype: 'buttongroup',
-                                    disabled: true,
-                                    title: '',
-                                    titleCollapse: true,
-                                    columns: 1,
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'saveBtn',
-                                            icon: '/images/mimiglyphs/54.png',
-                                            text: '',
-                                            tooltip: 'Save Changes'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'resetBtn',
-                                            icon: '/images/mimiglyphs/52.png',
-                                            text: '',
-                                            tooltip: 'Cancel Changes'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'button',
-                                    disabled: true,
-                                    itemId: 'deleteBtn',
-                                    icon: '/images/trash-icon.png',
-                                    scale: 'large',
-                                    text: '',
-                                    tooltip: 'Remove Selected'
-                                },
-                                {
-                                    xtype: 'button',
-                                    disabled: true,
-                                    itemId: 'typeAssignBtn',
-                                    icon: '/images/gear-icon.png',
-                                    scale: 'large',
-                                    text: '',
-                                    tooltip: 'Mime type based on file extension'
-                                }
-                            ]
-                        }
-                    ],
-                    selModel: Ext.create('Ext.selection.RowModel', {
-                        mode: 'MULTI'
-                    })
+                    xtype: 'mygridpanel1',
+                    flex: 2
                 }
             ],
             tools: [

@@ -173,113 +173,17 @@
                     "designerId": "68eeda04-8286-429d-aad0-19edf5e2af29"
                 },
                 {
-                    "type": "Ext.tree.Panel",
+                    "type": "linkedinstance",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "layout|flex": 1,
-                        "itemId": "treePanel",
-                        "frameHeader": false,
-                        "header": false,
-                        "manageHeight": false,
-                        "title": "My Tree Panel",
-                        "titleCollapse": false,
-                        "hideHeaders": true,
-                        "scroll": true,
-                        "store": "TagStore",
-                        "displayField": "name",
-                        "rootVisible": false,
-                        "useArrows": true
+                        "layout|flex": 1
                     },
-                    "configAlternates": {
-                        "scroll": "boolean"
-                    },
-                    "designerId": "d0ed9d1d-6f14-40c8-b4a3-1f18b347c387",
-                    "cn": [
-                        {
-                            "type": "Ext.tree.View",
-                            "reference": {
-                                "name": "viewConfig",
-                                "type": "object"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "rootVisible": false
-                            },
-                            "designerId": "38d03e12-c1b0-47d9-b26f-8aaa79f5b353",
-                            "cn": [
-                                {
-                                    "type": "Ext.tree.plugin.TreeViewDragDrop",
-                                    "reference": {
-                                        "name": "plugins",
-                                        "type": "array"
-                                    },
-                                    "codeClass": "Ext.tree.plugin.TreeViewDragDrop",
-                                    "userConfig": {
-                                        "appendOnly": true,
-                                        "dragGroup": "tag",
-                                        "dropGroup": "tag"
-                                    },
-                                    "designerId": "7e798443-5f81-471a-972d-a3fa8b5b55a0"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.selection.RowModel",
-                            "reference": {
-                                "name": "selModel",
-                                "type": "object"
-                            },
-                            "codeClass": "Ext.selection.RowModel",
-                            "userConfig": {
-                                "mode": "MULTI"
-                            },
-                            "designerId": "16f70fe5-4823-4b78-ad32-537689d44240"
-                        },
-                        {
-                            "type": "Ext.tree.Column",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "name",
-                                "text": "Name",
-                                "flex": 1
-                            },
-                            "designerId": "1e9610dc-f2b9-47bc-978d-ec8b4aa183ba",
-                            "cn": [
-                                {
-                                    "type": "fixedfunction",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "renderer",
-                                        "designer|params": [
-                                            "value",
-                                            "metaData",
-                                            "record",
-                                            "rowIndex",
-                                            "colIndex",
-                                            "store",
-                                            "view"
-                                        ],
-                                        "implHandler": [
-                                            "return value + \" (\" + record.get('count') + \")\";"
-                                        ]
-                                    },
-                                    "designerId": "e44a3091-2980-41f8-a43b-f7ae00f19f8f"
-                                }
-                            ]
-                        }
-                    ]
+                    "designerId": "00d9e0cd-da5c-4f62-adac-575d8fee6c93",
+                    "masterInstanceId": "fe0a73a0-1e3c-41ec-8673-9684aced5ff1"
                 }
             ]
         }

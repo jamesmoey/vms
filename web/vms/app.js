@@ -30,7 +30,10 @@ Ext.application({
     views: [
         'MyViewport',
         'S3Upload',
-        'EasyDateColumn'
+        'EasyDateColumn',
+        'TagTree',
+        'CompleteUploadGrid',
+        'PartUploadGrid'
     ],
     autoCreateViewport: true,
     controllers: [

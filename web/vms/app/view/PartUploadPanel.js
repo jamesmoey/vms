@@ -17,7 +17,7 @@ Ext.define('VMS.view.PartUploadPanel', {
     extend: 'Ext.panel.Panel',
 
     requires: [
-        'VMS.view.EasyDateColumn'
+        'VMS.view.PartUploadGrid'
     ],
 
     itemId: 'partUploadPanel',
@@ -40,109 +40,8 @@ Ext.define('VMS.view.PartUploadPanel', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'gridpanel',
-                    flex: 1,
-                    itemId: 'partUploadGrid',
-                    header: false,
-                    title: 'My Grid Panel',
-                    titleCollapse: false,
-                    disableSelection: true,
-                    store: 'MultipartUploadStore',
-                    columns: [
-                        {
-                            xtype: 'actioncolumn',
-                            itemId: 'actionColumn',
-                            padding: '',
-                            resizable: false,
-                            defaults: {
-                                padding: '0 10 0 10'
-                            },
-                            enableColumnHide: false,
-                            hideable: false,
-                            items: [
-                                {
-                                    handler: function(view, rowIndex, colIndex, item, e, record, row) {
-                                        me.fireEvent('resumeUpload', {
-                                            store: view.getStore(),
-                                            record: record
-                                        })
-                                    },
-                                    icon: '/images/mimiglyphs/38.png',
-                                    tooltip: 'Resume Upload'
-                                },
-                                {
-                                    handler: function(view, rowIndex, colIndex, item, e, record, row) {
-                                        me.fireEvent('abortUpload', {
-                                            store: view.getStore(),
-                                            record: record
-                                        })
-                                    },
-                                    icon: '/images/mimiglyphs/51.png',
-                                    tooltip: 'Abort Upload'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            defaultWidth: 50,
-                            dataIndex: 'bucket',
-                            menuText: '',
-                            text: 'Bucket',
-                            flex: 1
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'key',
-                            menuText: 'Name',
-                            text: 'Name',
-                            flex: 3
-                        },
-                        {
-                            xtype: 'templatecolumn',
-                            tpl: [
-                                '<tpl if="uploading">',
-                                '    Uploading...',
-                                '<tpl else >',
-                                '    <tpl if="status == 0">',
-                                '        Started',
-                                '    <tpl elseif="status == 1">',
-                                '        In Progress',
-                                '    <tpl elseif="status == 2">',
-                                '        Aborted',
-                                '    <tpl elseif="status == 3">',
-                                '        Completed',
-                                '    </tpl>',
-                                '</tpl>'
-                            ],
-                            text: 'Status'
-                        },
-                        {
-                            xtype: 'easydatecolumn',
-                            dataIndex: 'created_at',
-                            text: 'Started On'
-                        },
-                        {
-                            xtype: 'easydatecolumn',
-                            dataIndex: 'updated_at',
-                            text: 'Last Update'
-                        },
-                        {
-                            xtype: 'templatecolumn',
-                            tpl: [
-                                '{[Object.keys(values.completed_part).length]} / {number_of_part}'
-                            ],
-                            text: 'Completed'
-                        },
-                        {
-                            xtype: 'templatecolumn',
-                            tpl: [
-                                '{[new Number(values.size/1024/1024).toFixed(2).toLocaleString()]} MB'
-                            ],
-                            dataIndex: 'size',
-                            text: 'File Size',
-                            flex: 1
-                        }
-                    ]
+                    xtype: 'mygridpanel',
+                    flex: 1
                 }
             ],
             tools: [

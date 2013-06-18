@@ -197,6 +197,38 @@
                 "app/model/Tag.js"
             ],
             "className": "Tag"
+        },
+        "fe0a73a0-1e3c-41ec-8673-9684aced5ff1": {
+            "paths": [
+                "metadata/view/TagTree",
+                "app/view/override/TagTree.js",
+                "app/view/TagTree.js"
+            ],
+            "className": "TagTree"
+        },
+        "fbb29b46-3f24-4487-ae10-c489f3ff7e4f": {
+            "paths": [
+                "metadata/view/CompleteUploadGrid",
+                "app/view/override/CompleteUploadGrid.js",
+                "app/view/CompleteUploadGrid.js"
+            ],
+            "className": "CompleteUploadGrid"
+        },
+        "b51d1781-4310-4cd8-9910-883a8fd6e87d": {
+            "paths": [
+                "metadata/view/PartUploadGrid",
+                "app/view/override/PartUploadGrid.js",
+                "app/view/PartUploadGrid.js"
+            ],
+            "className": "PartUploadGrid"
+        },
+        "a5c9c6a5-557e-460c-85b9-bb7d9960f223": {
+            "paths": [
+                "metadata/view/TagTreeDragDropPlugin",
+                "app/view/override/TagTreeDragDropPlugin.js",
+                "app/view/TagTreeDragDropPlugin.js"
+            ],
+            "className": "TagTreeDragDropPlugin"
         }
     },
     "viewOrderMap": {
@@ -207,7 +239,11 @@
             "68aa00a6-b610-4212-a468-0ef04263af22",
             "b719e6f2-61fc-4d04-8a3a-ebff0274d043",
             "3133cf2f-674e-439c-8efe-265c9ca8b351",
-            "7185f3fe-4147-4813-9340-2f0af8dbbdce"
+            "7185f3fe-4147-4813-9340-2f0af8dbbdce",
+            "fe0a73a0-1e3c-41ec-8673-9684aced5ff1",
+            "fbb29b46-3f24-4487-ae10-c489f3ff7e4f",
+            "b51d1781-4310-4cd8-9910-883a8fd6e87d",
+            "a5c9c6a5-557e-460c-85b9-bb7d9960f223"
         ],
         "store": [
             "83025eb7-3662-4fac-a366-0a16af694b9f",

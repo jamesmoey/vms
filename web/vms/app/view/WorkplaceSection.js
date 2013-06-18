@@ -18,7 +18,8 @@ Ext.define('VMS.view.WorkplaceSection', {
     alias: 'widget.workplace_section',
 
     requires: [
-        'VMS.view.S3Upload'
+        'VMS.view.S3Upload',
+        'VMS.view.TagTree'
     ],
 
     itemId: 'workplaceSection',
@@ -113,44 +114,8 @@ Ext.define('VMS.view.WorkplaceSection', {
                             enableKeyEvents: true
                         },
                         {
-                            xtype: 'treepanel',
-                            flex: 1,
-                            itemId: 'treePanel',
-                            frameHeader: false,
-                            header: false,
-                            manageHeight: false,
-                            title: 'My Tree Panel',
-                            titleCollapse: false,
-                            hideHeaders: true,
-                            scroll: true,
-                            store: 'TagStore',
-                            displayField: 'name',
-                            rootVisible: false,
-                            useArrows: true,
-                            viewConfig: {
-                                rootVisible: false,
-                                plugins: [
-                                    Ext.create('Ext.tree.plugin.TreeViewDragDrop', {
-                                        appendOnly: true,
-                                        dragGroup: 'tag',
-                                        dropGroup: 'tag'
-                                    })
-                                ]
-                            },
-                            selModel: Ext.create('Ext.selection.RowModel', {
-                                mode: 'MULTI'
-                            }),
-                            columns: [
-                                {
-                                    xtype: 'treecolumn',
-                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                        return value + " (" + record.get('count') + ")";
-                                    },
-                                    dataIndex: 'name',
-                                    text: 'Name',
-                                    flex: 1
-                                }
-                            ]
+                            xtype: 'mytreepanel',
+                            flex: 1
                         }
                     ]
                 }

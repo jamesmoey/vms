@@ -1,0 +1,94 @@
+{
+    "type": "Ext.tree.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "itemId": "treePanel",
+        "designer|userClassName": "TagTree",
+        "designer|userAlias": "mytreepanel",
+        "frameHeader": false,
+        "header": false,
+        "manageHeight": false,
+        "title": "My Tree Panel",
+        "titleCollapse": false,
+        "hideHeaders": true,
+        "scroll": true,
+        "store": "TagStore",
+        "displayField": "name",
+        "rootVisible": false,
+        "useArrows": true
+    },
+    "configAlternates": {
+        "scroll": "boolean"
+    },
+    "designerId": "fe0a73a0-1e3c-41ec-8673-9684aced5ff1",
+    "cn": [
+        {
+            "type": "Ext.tree.View",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "rootVisible": false
+            },
+            "designerId": "38d03e12-c1b0-47d9-b26f-8aaa79f5b353"
+        },
+        {
+            "type": "Ext.selection.RowModel",
+            "reference": {
+                "name": "selModel",
+                "type": "object"
+            },
+            "codeClass": "Ext.selection.RowModel",
+            "userConfig": {
+                "mode": "MULTI"
+            },
+            "designerId": "16f70fe5-4823-4b78-ad32-537689d44240"
+        },
+        {
+            "type": "Ext.tree.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "name",
+                "text": "Name",
+                "flex": 1
+            },
+            "designerId": "1e9610dc-f2b9-47bc-978d-ec8b4aa183ba",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "renderer",
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "implHandler": [
+                            "return value + \" (\" + record.get('count') + \")\";"
+                        ]
+                    },
+                    "designerId": "e44a3091-2980-41f8-a43b-f7ae00f19f8f"
+                }
+            ]
+        }
+    ]
+}

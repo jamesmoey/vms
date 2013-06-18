@@ -115,6 +115,14 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
         }
     },
 
+    onViewDrop: function(target, data, record, position) {
+        console.log(target);
+        console.log(data);
+        console.log(record);
+        console.log(position);
+        record.set("count", record.get("count")+data.records.length);
+    },
+
     init: function(application) {
         this.control({
             "#workplaceSection #uploadSection menuitem": {
@@ -128,6 +136,9 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
             },
             "#resourceSection #treePanel": {
                 cellkeydown: this.onTreepanelCellkeydown
+            },
+            "#treePanel treeview": {
+                drop: this.onViewDrop
             }
         });
     }
