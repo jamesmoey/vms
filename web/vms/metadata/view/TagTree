@@ -6,9 +6,9 @@
     },
     "codeClass": null,
     "userConfig": {
-        "itemId": "treePanel",
+        "itemId": null,
         "designer|userClassName": "TagTree",
-        "designer|userAlias": "mytreepanel",
+        "designer|userAlias": "TagTree",
         "frameHeader": false,
         "header": false,
         "manageHeight": false,

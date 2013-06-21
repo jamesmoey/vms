@@ -90,6 +90,31 @@ abstract class S3Resources {
     protected $mimeType;
 
     /**
+     * Keyword to identify this resource
+     * @ORM\Column(type="simple_array")
+     *
+     * @var string[]
+     */
+    protected $keywords;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Tpg\ResourceBundle\Entity\Tag")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     * @JMS\Type("Tpg\ResourceBundle\Entity\Tag")
+     * @JMS\MaxDepth(1)
+     */
+    protected $tag;
+
+    /**
+     * @JMS\Accessor(getter="getTagId")
+     */
+    protected $tag_id;
+
+    public function getTagId() {
+        return $this->tag->getId();
+    }
+
+    /**
      * Create a new instance of this sub class.
      *
      * @param $mimeType
@@ -271,5 +296,50 @@ abstract class S3Resources {
     public function getMimeType()
     {
         return $this->mimeType;
+    }
+
+    /**
+     * Set keywords
+     *
+     * @param array $keywords
+     * @return S3Resources
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+    
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return array 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param \Tpg\ResourceBundle\Entity\Tag $tag
+     * @return S3Resources
+     */
+    public function setTag(\Tpg\ResourceBundle\Entity\Tag $tag = null)
+    {
+        $this->tag = $tag;
+    
+        return $this;
+    }
+
+    /**
+     * Get tag
+     * @return \Tpg\ResourceBundle\Entity\Tag
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

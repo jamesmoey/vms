@@ -27,15 +27,6 @@
             "designerId": "e2f18213-8d4c-4bfb-9627-3f51fe3ddc3c",
             "cn": [
                 {
-                    "type": "Ext.data.reader.Json",
-                    "reference": {
-                        "name": "reader",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "designerId": "dd4ae3eb-a78a-4007-927e-1898de31a754"
-                },
-                {
                     "type": "Ext.data.writer.Json",
                     "reference": {
                         "name": "writer",
@@ -47,21 +38,17 @@
                         "writeRecordId": false
                     },
                     "designerId": "e8ebdaea-4217-417b-9ed3-50a835129cce"
+                },
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "7a14ec8e-ceb3-4b7a-99b8-f0a2cff6a7ea"
                 }
             ]
-        },
-        {
-            "type": "Ext.util.Sorter",
-            "reference": {
-                "name": "sorters",
-                "type": "object"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "direction": "DESC",
-                "property": "updated_at"
-            },
-            "designerId": "beedfe3b-3f9d-4dc6-9f23-acbf17a026fb"
         }
     ]
 }

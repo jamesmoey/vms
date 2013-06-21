@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "317831daf15bcbc22248369cce2e9794",
+    "hash": "52aeb9c9ea25e0a4b5cb56fcf253658f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1236,16 +1236,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "0.12.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "0.12.0"
+                "reference": "5b8b4b474bcc13310161bd1a10c49bc3f9c8de1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/0.12.0",
-                "reference": "0.12.0",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/5b8b4b474bcc13310161bd1a10c49bc3f9c8de1c",
+                "reference": "5b8b4b474bcc13310161bd1a10c49bc3f9c8de1c",
                 "shasum": ""
             },
             "require": {
@@ -1270,7 +1270,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "0.13-dev"
                 }
             },
             "autoload": {
@@ -1286,7 +1286,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1299,7 +1299,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-03-28 16:41:24"
+            "time": "2013-06-01 18:09:40"
         },
         {
             "name": "jms/serializer-bundle",
@@ -1840,12 +1840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stof/StofDoctrineExtensionsBundle.git",
-                "reference": "9701288b8584b732618e0a70cfeab6ced1bf332b"
+                "reference": "7618302c798edbe5f13cd7d7f6aab4b21110a135"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/9701288b8584b732618e0a70cfeab6ced1bf332b",
-                "reference": "9701288b8584b732618e0a70cfeab6ced1bf332b",
+                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/7618302c798edbe5f13cd7d7f6aab4b21110a135",
+                "reference": "7618302c798edbe5f13cd7d7f6aab4b21110a135",
                 "shasum": ""
             },
             "require": {
@@ -1893,20 +1893,20 @@
                 "translatable",
                 "tree"
             ],
-            "time": "2013-06-16 18:38:55"
+            "time": "2013-06-20 00:09:53"
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "v5.0.0"
+                "reference": "v5.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v5.0.0",
-                "reference": "v5.0.0",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v5.0.1",
+                "reference": "v5.0.1",
                 "shasum": ""
             },
             "require": {
@@ -1915,7 +1915,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.1-dev"
                 }
             },
             "autoload": {
@@ -1942,7 +1942,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-04-30 17:35:30"
+            "time": "2013-06-17 13:32:32"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2973,12 +2973,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "78579211860937e6c2b23d50d3b8a45ffe348ee6"
+                "reference": "0b1729108487442cb9e5e1617e7b523feb9cb41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/78579211860937e6c2b23d50d3b8a45ffe348ee6",
-                "reference": "78579211860937e6c2b23d50d3b8a45ffe348ee6",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/0b1729108487442cb9e5e1617e7b523feb9cb41d",
+                "reference": "0b1729108487442cb9e5e1617e7b523feb9cb41d",
                 "shasum": ""
             },
             "require": {
@@ -3032,7 +3032,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2013-06-13 10:33:30"
+            "time": "2013-06-19 08:25:17"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3393,19 +3393,20 @@
         },
         {
             "name": "videlalvaro/php-amqplib",
-            "version": "v2.0.2",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
-                "url": "git://github.com/videlalvaro/php-amqplib.git",
-                "reference": "v2.0.2"
+                "url": "https://github.com/videlalvaro/php-amqplib.git",
+                "reference": "v2.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/v2.0.2",
-                "reference": "v2.0.2",
+                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/v2.1.0",
+                "reference": "v2.1.0",
                 "shasum": ""
             },
             "require": {
+                "ext-bcmath": "*",
                 "php": ">=5.3.0"
             },
             "type": "library",
@@ -3430,7 +3431,7 @@
                 "queue",
                 "rabbitmq"
             ],
-            "time": "2013-02-13 19:43:51"
+            "time": "2013-06-17 19:25:27"
         }
     ],
     "aliases": [
@@ -3439,6 +3440,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jms/security-extra-bundle": 20,
+        "jms/serializer": 20,
         "jms/serializer-bundle": 20,
         "jms/di-extra-bundle": 20,
         "platinumpixs/aws-symfony2-bundle": 20,

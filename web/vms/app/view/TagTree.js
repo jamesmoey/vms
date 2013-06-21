@@ -15,13 +15,12 @@
 
 Ext.define('VMS.view.TagTree', {
     extend: 'Ext.tree.Panel',
-    alias: 'widget.mytreepanel',
+    alias: 'widget.TagTree',
 
     requires: [
         'VMS.view.override.TagTree'
     ],
 
-    itemId: 'treePanel',
     frameHeader: false,
     header: false,
     manageHeight: false,

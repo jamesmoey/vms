@@ -31,18 +31,14 @@ Ext.define('VMS.store.S3ResourceStore', {
                 type: 'rest',
                 url: '/api/s3/resources',
                 format: 'json',
-                reader: {
-                    type: 'json'
-                },
                 writer: {
                     type: 'json',
                     writeAllFields: false,
                     writeRecordId: false
+                },
+                reader: {
+                    type: 'json'
                 }
-            },
-            sorters: {
-                direction: 'DESC',
-                property: 'updated_at'
             }
         }, cfg)]);
     }

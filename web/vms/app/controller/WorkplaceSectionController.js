@@ -120,7 +120,20 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
         console.log(data);
         console.log(record);
         console.log(position);
-        record.set("count", record.get("count")+data.records.length);
+        if (data.records[0] instanceof VMS.model.S3Resources) {
+            Ext.each(data.records, function(resource) {
+                resource.setTag(record);
+            });
+            this.getStore('S3ResourceStore').sync();
+            record.set("count", record.get("count")+data.records.length);
+        }
+    },
+
+    onTreePanelItemDblClick: function(dataview, record, item, index, e, eOpts) {
+        console.log(record);
+        record.s3resources().each(function(item) {
+            console.log(item);
+        });
     },
 
     init: function(application) {
@@ -139,6 +152,9 @@ Ext.define('VMS.controller.WorkplaceSectionController', {
             },
             "#treePanel treeview": {
                 drop: this.onViewDrop
+            },
+            "#workplaceSection TagTree": {
+                itemdblclick: this.onTreePanelItemDblClick
             }
         });
     }

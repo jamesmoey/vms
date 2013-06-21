@@ -16,6 +16,10 @@
 Ext.define('VMS.model.Tag', {
     extend: 'Ext.data.Model',
 
+    uses: [
+        'VMS.model.S3Resources'
+    ],
+
     fields: [
         {
             name: 'name',
@@ -45,5 +49,13 @@ Ext.define('VMS.model.Tag', {
             name: 'count',
             type: 'int'
         }
-    ]
+    ],
+
+    hasMany: {
+        associationKey: 'tag_id',
+        model: 'VMS.model.S3Resources',
+        autoLoad: true,
+        foreignKey: 'tag',
+        name: 's3resources'
+    }
 });

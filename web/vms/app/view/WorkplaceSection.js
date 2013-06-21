@@ -114,7 +114,7 @@ Ext.define('VMS.view.WorkplaceSection', {
                             enableKeyEvents: true
                         },
                         {
-                            xtype: 'mytreepanel',
+                            xtype: 'TagTree',
                             flex: 1
                         }
                     ]

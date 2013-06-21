@@ -5,7 +5,9 @@ use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
 use Tpg\S3UploadBundle\Entity\Multipart;
 use Symfony\Component\Validator\Validator;
 use Tpg\S3UploadBundle\Component\ValidationException;
@@ -13,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use JMS\Serializer\Serializer;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class S3ResourcesController extends FOSRestController {
 
@@ -56,6 +59,12 @@ class S3ResourcesController extends FOSRestController {
     /**
      * Get a list of S3 Resources
      *
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the list.")
+     * @QueryParam(name="start", requirements="\d+", default="0", description="Page of the list.")
+     * @QueryParam(name="limit", requirements="\d+", default="25", description="Number of record per fetch.")
+     * @QueryParam(name="sort", description="Sort result by field in URL encoded JSON format", default="[]")
+     * @QueryParam(name="filter", description="Search filter in URL encoded JSON format", default="[]")
+     *
      * @ApiDoc(
      *  description="Return a collection of S3 Resources",
      *  resource=true,
@@ -63,14 +72,41 @@ class S3ResourcesController extends FOSRestController {
      *      200="List Successfully",
      *  }
      * )
+     *
+     * @param ParamFetcherInterface $paramFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getResourcesAction() {
+    public function getResourcesAction(ParamFetcherInterface $paramFetcher) {
         /** @var EntityManager $em */
         $em = $this->get('doctrine.orm.default_entity_manager');
         /** @var EntityRepository $repo */
         $repo = $em->getRepository('TpgResourceBundle:S3Resources');
-        $view = View::create($repo->findAll(), 200);
+        $rawSorters = json_decode($paramFetcher->get("sort"), true);
+        $sorters = [];
+        foreach ($rawSorters as $s) {
+            $sorters[$s['property']] = $s['direction'];
+        }
+        $rawFilters = json_decode($paramFetcher->get("filter"), true);
+        $filters = [];
+        foreach ($rawFilters as $f) {
+            $filters[$f['property']] = $f['value'];
+        }
+        $start = 0;
+        if ($paramFetcher->get("start") === "0") {
+            if ($paramFetcher->get("page") > 1) {
+                $start = ($paramFetcher->get("page")-1) * $paramFetcher->get("limit");
+            }
+        } else {
+            $start = $paramFetcher->get("start");
+        }
+        $view = View::create($repo->findBy(
+            $filters,
+            $sorters,
+            $paramFetcher->get("limit"),
+            $start
+        ), 200)->setSerializationContext(
+            SerializationContext::create()->enableMaxDepthChecks()
+        );
         return $this->handleView($view);
     }
 
@@ -87,7 +123,6 @@ class S3ResourcesController extends FOSRestController {
      * )
      *
      * @param integer $id Multipart Upload ID
-     * @param integer $count x number of next part to get
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function putResourcesAction($id) {
@@ -103,6 +138,15 @@ class S3ResourcesController extends FOSRestController {
                 ->getForm();
             $form->submit($this->getRequest()->request->all(), false);
             $this->validate($resource, 400);
+            if ($this->getRequest()->request->has("tag_id")) {
+                $tag = $em->find('Tpg\ResourceBundle\Entity\Tag', $this->getRequest()->request->get("tag_id"));
+                if ($tag === null) {
+                    $view = View::create(['errors'=>'Entity not found'], 404);
+                    return $this->handleView($view);
+                } else {
+                    $resource->setTag($tag);
+                }
+            }
             $em->flush();
             $view = View::create($resource, 200);
         }

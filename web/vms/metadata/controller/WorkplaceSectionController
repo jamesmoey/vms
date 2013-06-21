@@ -212,7 +212,13 @@
                     "console.log(data);",
                     "console.log(record);",
                     "console.log(position);",
-                    "record.set(\"count\", record.get(\"count\")+data.records.length);"
+                    "if (data.records[0] instanceof VMS.model.S3Resources) {",
+                    "    Ext.each(data.records, function(resource) {",
+                    "        resource.setTag(record);",
+                    "    });",
+                    "    this.getStore('S3ResourceStore').sync();",
+                    "    record.set(\"count\", record.get(\"count\")+data.records.length);",
+                    "}"
                 ],
                 "name": "drop",
                 "scope": "me",
@@ -220,6 +226,28 @@
                 "designer|controlQuery": "#treePanel treeview"
             },
             "designerId": "fc75b6e2-c73f-41c6-ba3b-4fd6c1d2b9a6"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onTreePanelItemDblClick",
+                "implHandler": [
+                    "console.log(record);",
+                    "record.s3resources().each(function(item) {",
+                    "    console.log(item);",
+                    "});"
+                ],
+                "name": "itemdblclick",
+                "scope": "me",
+                "designer|targetType": "TagTree",
+                "designer|controlQuery": "#workplaceSection TagTree"
+            },
+            "designerId": "5315cb7b-0f6f-43cb-9b4f-8a047ed3e51b"
         }
     ]
 }

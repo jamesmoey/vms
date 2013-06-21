@@ -16,6 +16,10 @@
 Ext.define('VMS.model.S3Resources', {
     extend: 'Ext.data.Model',
 
+    uses: [
+        'VMS.model.Tag'
+    ],
+
     fields: [
         {
             name: 'id',
@@ -44,6 +48,27 @@ Ext.define('VMS.model.S3Resources', {
         {
             name: 'type',
             type: 'string'
+        },
+        {
+            name: 'tag_id',
+            type: 'int'
         }
-    ]
+    ],
+
+    belongsTo: {
+        associationKey: 'tag_id',
+        model: 'VMS.model.Tag',
+        foreignKey: 'tag_id',
+        getterName: 'getTag',
+        setterName: 'setTag'
+    },
+
+    proxy: {
+        type: 'rest',
+        url: '/api/s3/resources',
+        format: 'json',
+        reader: {
+            type: 'json'
+        }
+    }
 });

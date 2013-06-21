@@ -100,6 +100,24 @@
                 "type": "int"
             },
             "designerId": "47355ff4-c966-4d4e-8efc-8bfae69c9fa8"
+        },
+        {
+            "type": "Ext.data.association.HasMany",
+            "reference": {
+                "name": "hasMany",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "associationKey": "tag_id",
+                "model": "S3Resources",
+                "designer|displayName": "hasManyS3Resources",
+                "autoLoad": true,
+                "filterProperty": null,
+                "foreignKey": "tag",
+                "name": "s3resources"
+            },
+            "designerId": "6ab923e7-4895-466f-8c85-4ac8189f12fb"
         }
     ]
 }

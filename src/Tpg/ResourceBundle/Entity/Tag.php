@@ -1,6 +1,7 @@
 <?php
 namespace Tpg\ResourceBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,8 +31,9 @@ class Tag {
     protected $name;
 
     /**
-     * @ORM\Column
      * @var integer
+     * @JMS\Accessor(getter="getCount")
+     * @JMS\ReadOnly
      */
     protected $count = 0;
 
@@ -76,6 +78,17 @@ class Tag {
      * @JMS\ReadOnly
      */
     private $children;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tpg\ResourceBundle\Entity\S3Resources", mappedBy="tag")
+     * @JMS\Exclude
+     * @var ArrayCollection
+     */
+    private $resources;
+
+    public function __construct() {
+        $this->resources = new ArrayCollection();
+    }
 
     /**
      * @param mixed $children
@@ -238,22 +251,43 @@ class Tag {
     }
 
     /**
-     * @param int $count
-     *
-     * @return Tag
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getCount()
     {
-        return $this->count;
+        return $this->resources->count();
+    }
+
+    /**
+     * Add resources
+     *
+     * @param \Tpg\ResourceBundle\Entity\S3Resources $resources
+     * @return Tag
+     */
+    public function addResource(\Tpg\ResourceBundle\Entity\S3Resources $resources)
+    {
+        $this->resources[] = $resources;
+        return $this;
+    }
+
+    /**
+     * Remove resources
+     *
+     * @param \Tpg\ResourceBundle\Entity\S3Resources $resources
+     */
+    public function removeResource(\Tpg\ResourceBundle\Entity\S3Resources $resources)
+    {
+        $this->resources->removeElement($resources);
+        return $this;
+    }
+
+    /**
+     * Get resources
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getResources()
+    {
+        return $this->resources;
     }
 }

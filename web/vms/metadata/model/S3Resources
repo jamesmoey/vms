@@ -100,6 +100,60 @@
                 "type": "string"
             },
             "designerId": "99a03a5d-e3cb-4e7e-9446-f019bc989cd3"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "tag_id",
+                "type": "int"
+            },
+            "designerId": "8f31ea86-f88f-4efe-a7d6-e9922a8aae9c"
+        },
+        {
+            "type": "Ext.data.association.BelongsTo",
+            "reference": {
+                "name": "belongsTo",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "associationKey": "tag_id",
+                "model": "Tag",
+                "designer|displayName": "belongsToTag",
+                "foreignKey": "tag_id",
+                "getterName": "getTag",
+                "setterName": "setTag"
+            },
+            "designerId": "db2de1a6-b6f7-4a2d-b82d-b8d75ba8687c"
+        },
+        {
+            "type": "Ext.data.proxy.Rest",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "/api/s3/resources",
+                "format": "json"
+            },
+            "designerId": "73d0ab96-1be6-4e12-b00c-6933889318a9",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "cb7cb45f-796f-42ff-90d7-45481aaa3fd7"
+                }
+            ]
         }
     ]
 }
